@@ -1,15 +1,14 @@
 parameters:
-    database_driver:   pdo_mysql
-    database_host:     localhost
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
-
-    mailer_transport:  smtp
-    mailer_host:       localhost
-    mailer_user:       ~
-    mailer_password:   ~
-
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: lifesmoother
+    database_user: lifesmoother
+    database_password: chicago
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 53614d12c3ef3d6e55b87735b37f1eb18faa1e53
+    database_path: null
