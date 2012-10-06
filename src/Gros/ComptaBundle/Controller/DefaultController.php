@@ -1,6 +1,6 @@
 <?php
 
-namespace Gros\Bundle\ComptaBundle\Controller;
+namespace Gros\ComptaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

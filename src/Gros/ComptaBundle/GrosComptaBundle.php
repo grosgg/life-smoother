@@ -1,6 +1,6 @@
 <?php
 
-namespace Gros\Bundle\ComptaBundle;
+namespace Gros\ComptaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

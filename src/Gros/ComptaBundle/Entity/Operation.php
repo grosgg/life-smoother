@@ -35,10 +35,9 @@ class Operation
      */
     private $date;
 
-    /**
-     * @var integer $category
-     *
-     * @ORM\Column(name="category", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
@@ -49,10 +48,9 @@ class Operation
      */
     private $user;
 
-    /**
-     * @var integer $shop
-     *
-     * @ORM\Column(name="shop", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="Shop")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $shop;
 
@@ -67,7 +65,6 @@ class Operation
     public function __construct()
     {
         $this->date = new \Datetime(); // Current datetime by default
-        $this->shop = 0; // Unknown shop by default
         $this->description = null; // No description by default
     }
 
@@ -128,29 +125,6 @@ class Operation
     }
 
     /**
-     * Set category
-     *
-     * @param integer $category
-     * @return Operation
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-    
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return integer 
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Set user
      *
      * @param integer $user
@@ -174,29 +148,6 @@ class Operation
     }
 
     /**
-     * Set shop
-     *
-     * @param integer $shop
-     * @return Operation
-     */
-    public function setShop($shop)
-    {
-        $this->shop = $shop;
-    
-        return $this;
-    }
-
-    /**
-     * Get shop
-     *
-     * @return integer 
-     */
-    public function getShop()
-    {
-        return $this->shop;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -217,5 +168,51 @@ class Operation
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Gros\ComptaBundle\Entity\Category $category
+     * @return Operation
+     */
+    public function setCategory(\Gros\ComptaBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+    
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Gros\ComptaBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set shop
+     *
+     * @param Gros\ComptaBundle\Entity\Shop $shop
+     * @return Operation
+     */
+    public function setShop(\Gros\ComptaBundle\Entity\Shop $shop)
+    {
+        $this->shop = $shop;
+    
+        return $this;
+    }
+
+    /**
+     * Get shop
+     *
+     * @return Gros\ComptaBundle\Entity\Shop 
+     */
+    public function getShop()
+    {
+        return $this->shop;
     }
 }

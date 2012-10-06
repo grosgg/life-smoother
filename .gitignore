@@ -21,3 +21,4 @@ web/images/*
 web/js/*
 *.php~
 web/media/cache/*
+composer.phar
