@@ -1,6 +1,6 @@
 <?php
 
-namespace Gros\Bundle\ComptaBundle\Entity;
+namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

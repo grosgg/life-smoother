@@ -1,14 +1,14 @@
 <?php
 
-namespace Gros\Bundle\ComptaBundle\Entity;
+namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gros\Bundle\ComptaBundle\Entity\Category
+ * Gros\ComptaBundle\Entity\Category
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Gros\Bundle\ComptaBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Gros\ComptaBundle\Entity\CategoryRepository")
  */
 class Category
 {

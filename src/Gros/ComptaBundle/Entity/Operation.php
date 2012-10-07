@@ -1,14 +1,14 @@
 <?php
 
-namespace Gros\Bundle\ComptaBundle\Entity;
+namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gros\Bundle\ComptaBundle\Entity\Operation
+ * Gros\ComptaBundle\Entity\Operation
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Gros\Bundle\ComptaBundle\Entity\OperationRepository")
+ * @ORM\Entity(repositoryClass="Gros\ComptaBundle\Entity\OperationRepository")
  */
 class Operation
 {
@@ -24,9 +24,16 @@ class Operation
     /**
      * @var float $amount
      *
-     * @ORM\Column(name="amount", type="decimal")
+     * @ORM\Column(name="amount", type="decimal", scale=2)
      */
     private $amount;
+
+    /**
+     * @var integer $type
+     *
+     * @ORM\Column(name="type", type="boolean")
+     */
+    private $type;
 
     /**
      * @var \DateTime $date
@@ -41,10 +48,9 @@ class Operation
      */
     private $category;
 
-    /**
-     * @var integer $user
-     *
-     * @ORM\Column(name="user", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -125,29 +131,6 @@ class Operation
     }
 
     /**
-     * Set user
-     *
-     * @param integer $user
-     * @return Operation
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return integer 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -176,7 +159,7 @@ class Operation
      * @param Gros\ComptaBundle\Entity\Category $category
      * @return Operation
      */
-    public function setCategory(\Gros\ComptaBundle\Entity\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
     
@@ -199,7 +182,7 @@ class Operation
      * @param Gros\ComptaBundle\Entity\Shop $shop
      * @return Operation
      */
-    public function setShop(\Gros\ComptaBundle\Entity\Shop $shop)
+    public function setShop(Shop $shop)
     {
         $this->shop = $shop;
     
@@ -214,5 +197,52 @@ class Operation
     public function getShop()
     {
         return $this->shop;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Gros\UserBundle\Entity\User $user
+     * @return Operation
+     */
+    public function setUser(\Gros\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Gros\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
+    /**
+     * Set type
+     *
+     * @param boolean $type
+     * @return Operation
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return boolean 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
