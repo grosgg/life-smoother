@@ -30,9 +30,9 @@ class OperationController extends Controller
 
         $entities = $em->getRepository('GrosComptaBundle:Operation')->findAll();
 
-        return array(
+        return $this->render('GrosComptaBundle:Operation:index.html.twig', array(
             'entities' => $entities,
-        );
+        ));
     }
 
     /**
@@ -176,4 +176,15 @@ class OperationController extends Controller
             ->getForm()
         ;
     }
+    
+    public function menuAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('GrosComptaBundle:Operation')->findAll();
+
+        return $this->render('GrosComptaBundle:Default:menu.html.twig', array(
+            'operations' => $entities,
+        ));
+    }
+
 }

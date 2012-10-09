@@ -1,0 +1,5 @@
+<ul>
+    {% for operation in operations %}
+        <li><a href="{{ path('operation_show', {'id': operation.id}) }}">{{ operation.amount}}€</a></li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,16 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    ComptaGros - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>ComptaGros</h1>
+
+    <hr>
+
+    {# On définit un nouveau block, que les vues du bundle pourront remplir #}
+    {% block groscompta_body %}
+    {% endblock %}
+
+{% endblock %}
