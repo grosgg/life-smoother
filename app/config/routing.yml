@@ -1,3 +1,7 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: GrosComptaBundle:Default:index }
+
 gros_compta:
     resource: "@GrosComptaBundle/Controller/"
     type:     annotation

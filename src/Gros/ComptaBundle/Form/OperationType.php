@@ -18,7 +18,7 @@ class OperationType extends AbstractType
                     0 => 'Debit',
                     1 => 'Credit'
                 )))
-            ->add('date')
+            ->add('date', 'date', array('widget' => 'single_text'))
             ->add('description')
             ->add('category', 'entity',array(
                 'class'    => 'GrosComptaBundle:Category',
@@ -26,7 +26,7 @@ class OperationType extends AbstractType
             ->add('shop', 'entity',array(
                 'class'    => 'GrosComptaBundle:Shop',
                 'property' => 'name'))
-            ->add('User', 'entity',array(
+            ->add('user', 'entity',array(
                 'class'    => 'GrosUserBundle:User',
                 'property' => 'username'))
         ;

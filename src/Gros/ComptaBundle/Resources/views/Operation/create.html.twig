@@ -1,16 +1,39 @@
-<h1>Operation creation</h1>
+{% extends "GrosComptaBundle::layout.html.twig" %}
 
-<form action="{{ path('operation_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+{% block title %}
+    New Operation - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    New Operation
+{% endblock %}
+
+{% form_theme form with 'GrosComptaBundle:Default:fields.html.twig' %}
+
+{% block groscompta_body %}
+
+<form class="form-horizontal" action="{{ path('operation_create') }}" method="post" {{ form_enctype(form) }}>
+<div class="control-group">
+    <label class="control-label" >{{ form_label(form.amount)}}</label>
+    <div class="controls">
+        <div class="input-append">
+            <input type="text" class="input-small" name="{{ form.amount.vars.full_name }}"><span class="add-on">€</span>
+            {{ form_errors(form.amount) }}
+        </div>
+    </div>
+</div>
+
+    {{ form_row(form.type) }}
+    {{ form_row(form.shop) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.description) }}
+
     <p>
-        <button type="submit">Create</button>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn" href="{{ path('operation') }}">Back to the list</a>
     </p>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('operation') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% endblock %}

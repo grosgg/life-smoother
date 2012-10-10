@@ -1,6 +1,17 @@
-<h1>Shop list</h1>
 
-<table class="records_list">
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Shops - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Shops
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Id</th>
@@ -16,24 +27,16 @@
             <td>{{ entity.name }}</td>
             <td>{{ entity.description }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('shop_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('shop_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn" href="{{ path('shop_show', { 'id': entity.id }) }}">show</a>
+                <a class="btn btn-warning" href="{{ path('shop_edit', { 'id': entity.id }) }}">edit</a>
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('shop_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<a class="btn btn-primary" href="{{ path('shop_new') }}">
+    Create a new entry
+</a>
+
+{% endblock %}

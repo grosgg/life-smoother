@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <title>{% block title %}Sdz{% endblock %}</title>
+        <title>{% block title %}Gros{% endblock %}</title>
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
@@ -21,8 +21,9 @@
                 <div id="menu" class="span3">
                     <h3>ComptaGros</h3>
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ path('home') }}">Home ComptaGros</a></li>
-                        <li><a href="{{ path('operation_create') }}">Add an Operation</a></li>
+                        <li><a href="{{ path('_welcome') }}">Home</a></li>
+                        <li><a href="{{ path('operation') }}">Operations</a></li>
+                        <li><a href="{{ path('shop') }}">Shops</a></li>
                     </ul>
 
                 </div>

@@ -4,6 +4,10 @@
     Operations - {{ parent() }}
 {% endblock %}
 
+{% block sub_title %}
+    Operations
+{% endblock %}
+
 {% block groscompta_body %}
 
 <table class="table table-striped">
@@ -24,26 +28,16 @@
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{{ entity.description }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a class="btn" href="{{ path('operation_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-warning" href="{{ path('operation_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn" href="{{ path('operation_show', { 'id': entity.id }) }}">show</a>
+                <a class="btn btn-warning" href="{{ path('operation_edit', { 'id': entity.id }) }}">edit</a>
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a class="btn btn-primary" href="{{ path('operation_create') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<a class="btn btn-primary" href="{{ path('operation_create') }}">
+    Create a new entry
+</a>
 
 {% endblock %}
