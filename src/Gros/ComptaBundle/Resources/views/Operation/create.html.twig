@@ -17,7 +17,7 @@
     <label class="control-label" >{{ form_label(form.amount)}}</label>
     <div class="controls">
         <div class="input-append">
-            <input type="text" class="input-small" name="{{ form.amount.vars.full_name }}"><span class="add-on">€</span>
+            <input type="text" class="input-small" name="{{ form.amount.vars.full_name }}" id="{{ form.amount.vars.id }}"><span class="add-on">€</span>
             {{ form_errors(form.amount) }}
         </div>
     </div>
@@ -29,6 +29,7 @@
     {{ form_row(form.date) }}
     {{ form_row(form.user) }}
     {{ form_row(form.description) }}
+    {{ form_row(form._token) }}
 
     <p>
         <button class="btn btn-primary" type="submit">Create</button>

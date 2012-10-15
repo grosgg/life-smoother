@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Gros\ComptaBundle\Entity\Shop;
 use Gros\ComptaBundle\Form\ShopType;
+use Gros\ComptaBundle\Form\ShopHandler;
 
 /**
  * Shop controller.
@@ -59,47 +60,25 @@ class ShopController extends Controller
     }
 
     /**
-     * Displays a form to create a new Shop entity.
-     *
-     * @Route("/new", name="shop_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Shop();
-        $form   = $this->createForm(new ShopType(), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
      * Creates a new Shop entity.
      *
      * @Route("/create", name="shop_create")
-     * @Method("POST")
-     * @Template("GrosComptaBundle:Shop:new.html.twig")
+     * @Template("GrosComptaBundle:Shop:create.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Shop();
-        $form = $this->createForm(new ShopType(), $entity);
-        $form->bind($request);
+        $shop  = new Shop;
+        $form = $this->createForm(new ShopType, $shop);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        $formHandler = new ShopHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager());
 
-            return $this->redirect($this->generateUrl('shop_show', array('id' => $entity->getId())));
+        if ($formHandler->process()) {
+            return $this->redirect($this->generateUrl('shop_show', array('id' => $shop->getId())));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->render('GrosComptaBundle:Shop:create.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     /**
