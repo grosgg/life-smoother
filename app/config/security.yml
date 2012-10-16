@@ -30,7 +30,7 @@ security:
                 remember_me: true            # On active la possibilité du "Se souvenir de moi" (désactivé par défaut)
             remember_me:
                 key:         %secret%        # On définit la clé pour le remember_me (%secret% est un parametre de parameters.ini)
-            anonymous:       true            # On autorise les utilisateurs anonymes (non identifiés)
+            anonymous:       false            # On autorise les utilisateurs anonymes (non identifiés)
             logout:          true
 
     access_control:
