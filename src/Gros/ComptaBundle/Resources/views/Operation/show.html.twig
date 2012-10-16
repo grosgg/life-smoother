@@ -1,6 +1,17 @@
-<h1>Operation</h1>
 
-<table class="record_properties">
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Operation {{ entity.id }} - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Operation {{ entity.id }}
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
     <tbody>
         <tr>
             <th>Id</th>
@@ -8,11 +19,23 @@
         </tr>
         <tr>
             <th>Amount</th>
-            <td>{{ entity.amount }}</td>
+            <td>{% if entity.type == 0 %}-{% else %}+{% endif %}{{ entity.amount }}€</td>
+        </tr>
+        <tr>
+            <th>Shop</th>
+            <td>{{ entity.shop.name }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ entity.category.name }}</td>
         </tr>
         <tr>
             <th>Date</th>
             <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>User</th>
+            <td>{{ entity.user }}</td>
         </tr>
         <tr>
             <th>Description</th>
@@ -21,21 +44,23 @@
     </tbody>
 </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('operation') }}">
+<ul class="unstyled">
+    <li style="float:left; margin-right:10px">
+        <a class="btn" href="{{ path('operation') }}">
             Back to the list
         </a>
     </li>
-    <li>
-        <a href="{{ path('operation_edit', { 'id': entity.id }) }}">
+    <li style="float:left; margin-right:10px">
+        <a class="btn btn-warning" href="{{ path('operation_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
-    <li>
-        <form action="{{ path('operation_delete', { 'id': entity.id }) }}" method="post">
+    <li style="float:left">
+        <form action="{{ path('operation_delete', { 'id': entity.id }) }}" method="post" >
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="btn btn-danger" type="submit">Delete</button>
         </form>
     </li>
 </ul>
+
+{% endblock %}

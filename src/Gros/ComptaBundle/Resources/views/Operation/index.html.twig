@@ -25,7 +25,7 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('operation_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.amount }}€</td>
+            <td>{% if entity.type == 0 %}-{% else %}+{% endif %}{{ entity.amount }}€</td>
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
             <td>{{ entity.shop.name }}</td>
             <td>{{ entity.description }}</td>
