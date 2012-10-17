@@ -1,0 +1,22 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    Home - {{ parent() }}
+{% endblock %}
+
+{% block header %}
+{% include "::navbar.html.twig" %}
+<div id="header" class="hero-unit">
+    <h1>Life Smoother</h1>
+    <p>An application to make your life easy</p>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="span4">
+    <ul class="unstyled">
+        <li><a class="btn btn-block" href="{{ path('operation') }}"><i class="icon-th-list"></i> GrosCompta</a></li>
+        <li><a class="btn btn-block" href="#"><i class="icon-user"></i> My Account</a></li>
+    </ul>
+</div>
+{% endblock %}

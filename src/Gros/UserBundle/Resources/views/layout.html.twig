@@ -1,5 +1,12 @@
 {% extends "::layout.html.twig" %}
 
+{% block header %}
+<div id="header" class="hero-unit">
+    <h1>Life Smoother</h1>
+    <p>An application to make your life easy</p>
+</div>
+{% endblock %}
+
 {% block body %}
 
 {% for key, message in app.session.getFlashes() %}

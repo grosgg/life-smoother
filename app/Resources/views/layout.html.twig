@@ -11,28 +11,14 @@
     </head>
 
     <body>
-        <div class="container">
-            {% block navbar %}
-            <div id="header" class="hero-unit">
-                <h1>Life Smoother</h1>
-                <p>An application to make your life easy</p>
-            </div>
-            {% endblock %}
+        {% block header %}
+        {% endblock %}
 
-            <div class="row">
-                <div id="menu" class="span3">
-                    <h3>ComptaGros</h3>
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ path('_welcome') }}">Home</a></li>
-                        <li><a href="{{ path('operation') }}">Operations</a></li>
-                        <li><a href="{{ path('shop') }}">Shops</a></li>
-                    </ul>
+        <div class="container-fluid">
 
-                </div>
-                <div id="content" class="span9">
-                    {% block body %}
-                    {% endblock %}
-                </div>
+            <div class="row-fluid">
+                {% block body %}
+                {% endblock %}
             </div>
 
             <footer>
