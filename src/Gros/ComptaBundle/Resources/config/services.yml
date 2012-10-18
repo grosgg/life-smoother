@@ -1,7 +1,7 @@
 parameters:
-#    gros_compta.example.class: Gros\Bundle\ComptaBundle\Example
+    google_charts_api_url: https://www.google.com/jsapi
 
 services:
-#    gros_compta.example:
-#        class: %gros_compta.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    gros_compta.charts:
+        class: Gros\ComptaBundle\Service\GrosCharts
+        arguments: [@doctrine]

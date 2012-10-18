@@ -10,14 +10,15 @@
 
 {% block body %}
     <div id="menu" class="span3">
+        {% block sidebar %}
         <h3>ComptaGros</h3>
         <ul class="nav nav-pills nav-stacked">
             <li><a href="{{ path('operation') }}">Operations</a></li>
             <li><a href="{{ path('shop') }}">Shops</a></li>
             <li><a href="{{ path('category') }}">Categories</a></li>
-            <li><a href="#">Analytics</a></li>
+            <li><a href="{{ path('analytics') }}">Analytics</a></li>
         </ul>
-
+        {% endblock %}
     </div>
     <div id="content" class="span9">
         <h1>{% block sub_title %}{% endblock %}</h1>

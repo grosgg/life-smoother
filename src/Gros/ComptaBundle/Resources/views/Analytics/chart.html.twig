@@ -1,0 +1,22 @@
+// Create the data table.
+
+var data = new google.visualization.DataTable();
+
+{% for column in columns %}
+data.addColumn('{{ column.type }}', '{{ column.label }}');
+{% endfor %}
+
+{% for row in rows %}
+data.addRow(['{{ row[0] }}', {{ row[1] }}]);
+{% endfor %}
+
+// Set chart options
+var options = {
+    'title':'{{ title }}',
+    'width':675,
+    'height':675
+};
+
+// Instantiate and draw our chart, passing in some options.
+var chart = new google.visualization.PieChart(document.getElementById('{{ target }}'));
+chart.draw(data, options);

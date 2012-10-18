@@ -1,40 +1,38 @@
     <div class="navbar">
         <div class="navbar-inner">
-            <div class="container-fluid">
 
-                <a class="brand" href="#">Life Smoother</a>
-                <ul class="nav">
-                    <li>
-                        <a href="{{ path('_welcome')}}">Home</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Compta <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ path('operation')}}">Operations</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('shop')}}">Shops</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('category')}}">Categories</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav pull-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My Account <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="navbar-text">Logged in as ...</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('fos_user_security_logout')}}">Logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <a class="brand" href="#">Life Smoother</a>
+            <ul class="nav">
+                <li>
+                    <a href="{{ path('_welcome')}}">Home</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Compta <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path('operation')}}">Operations</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('shop')}}">Shops</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('category')}}">Categories</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav pull-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> My Account <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="navbar-text">Logged in as ...</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout')}}">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>

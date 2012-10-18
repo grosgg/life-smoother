@@ -1,0 +1,54 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Analytics - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Analytics
+{% endblock %}
+
+{% block java_scripts %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table, 
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+        {% include 'GrosComptaBundle:Analytics:chart.html.twig' with data_exp_by_cat %}
+    }
+</script>
+{% endblock %}
+
+{% block sidebar %}
+{{ parent() }}
+<h3>Filters</h3>
+<form>
+    <label>Start Date</label>
+    <input type="text">
+    <label>End Date</label>
+    <input type="text">
+    <button type="submit" class="btn">Submit</button>
+</form>
+{% endblock %}
+
+{% block groscompta_body %}
+<div class="row">
+    <div id="exp_vs_inc" class="span9"></div>
+</div>
+<div class="row">
+    <div id="exp_by_cat" class="span9"></div>
+</div>
+<div class="row">
+    <div id="exp_by_shop" class="span9"></div>
+</div>
+<div class="row">
+    <div id="exp_by_user" class="span9"></div>
+</div>
+{% endblock %}
