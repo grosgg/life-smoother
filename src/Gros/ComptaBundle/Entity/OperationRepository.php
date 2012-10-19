@@ -12,4 +12,48 @@ use Doctrine\ORM\EntityRepository;
  */
 class OperationRepository extends EntityRepository
 {
+    public function sumAllDebit($startDate, $endDate)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('SUM(o.amount)')
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->where('o.type = :debit')
+                ->setParameter('debit', 'debit');
+
+        $qb = $this->setPeriod($qb, $startDate, $endDate);
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function sumAllCredit($startDate, $endDate)
+    {
+        // code...
+    }
+
+    public function sumByCategory($startDate, $endDate)
+    {
+        // code...
+    }
+
+    public function sumByShop($startDate, $endDate)
+    {
+        // code...
+    }
+
+    public function sumByUser($startDate, $endDate)
+    {
+        // code...
+    }
+
+    private function setPeriod(\Doctrine\ORM\QueryBuilder $qb, $startDate, $endDate)
+    {
+        $qb->andWhere('o.date BETWEEN :start AND :end')
+            ->setParameter('start', $startDate)
+            ->setParameter('end', $endDate);
+
+        return $qb;
+    }
 }
+

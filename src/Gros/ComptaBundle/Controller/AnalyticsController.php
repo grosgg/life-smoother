@@ -29,4 +29,20 @@ class AnalyticsController extends Controller
 
         return $this->render('GrosComptaBundle:Analytics:index.html.twig', array('data_exp_by_cat' => $data_exp_by_cat));
     }
+
+    /**
+     * Analytics test page
+     *
+     * @Route("/test", name="analytics_test")
+     * @Template()
+     */
+    public function testAction()
+    {
+        $total_debit = $this->getDoctrine()
+                            ->getEntityManager()
+                            ->getRepository('GrosComptaBundle:Operation')
+                            ->sumAllDebit('2012-10-01', '2012-10-19');
+
+        var_dump($total_debit);
+    }
 }
