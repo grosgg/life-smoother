@@ -12,39 +12,73 @@ use Doctrine\ORM\EntityRepository;
  */
 class OperationRepository extends EntityRepository
 {
-    public function sumAllDebit($startDate, $endDate)
+    public function sumByType($startDate, $endDate)
     {
         $qb = $this->_em->createQueryBuilder();
 
-        $qb->select('SUM(o.amount)')
-            ->from('GrosComptaBundle:Operation', 'o')
-            ->where('o.type = :debit')
-                ->setParameter('debit', 'debit');
+        $qb->select('o.type', 'SUM(o.amount) as sumamount')
+            ->from('GrosComptaBundle:Operation', 'o');
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
+
+        $qb->groupBy('o.type');
 
         return $qb->getQuery()
             ->getResult();
     }
 
-    public function sumAllCredit($startDate, $endDate)
-    {
-        // code...
-    }
-
     public function sumByCategory($startDate, $endDate)
     {
-        // code...
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('c.name', 'SUM(o.amount) as sumamount')
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->leftJoin('o.category', 'c')
+            ->where('o.type = :type')
+                ->setParameter('type', 0);
+
+        $qb = $this->setPeriod($qb, $startDate, $endDate);
+
+        $qb->groupBy('o.category');
+
+        return $qb->getQuery()
+            ->getResult();
     }
 
     public function sumByShop($startDate, $endDate)
     {
-        // code...
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('s.name', 'SUM(o.amount) as sumamount')
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->leftJoin('o.shop', 's')
+            ->where('o.type = :type')
+                ->setParameter('type', 0);
+
+        $qb = $this->setPeriod($qb, $startDate, $endDate);
+
+        $qb->groupBy('o.shop');
+
+        return $qb->getQuery()
+            ->getResult();
     }
 
     public function sumByUser($startDate, $endDate)
     {
-        // code...
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('u.username', 'SUM(o.amount) as sumamount')
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->leftJoin('o.user', 'u')
+            ->where('o.type = :type')
+                ->setParameter('type', 0);
+
+        $qb = $this->setPeriod($qb, $startDate, $endDate);
+
+        $qb->groupBy('o.user');
+
+        return $qb->getQuery()
+            ->getResult();
     }
 
     private function setPeriod(\Doctrine\ORM\QueryBuilder $qb, $startDate, $endDate)

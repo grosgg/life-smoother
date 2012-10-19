@@ -21,7 +21,10 @@
     // instantiates the pie chart, passes in the data and
     // draws it.
     function drawChart() {
+        {% include 'GrosComptaBundle:Analytics:chart.html.twig' with data_op_by_type %}
         {% include 'GrosComptaBundle:Analytics:chart.html.twig' with data_exp_by_cat %}
+        {% include 'GrosComptaBundle:Analytics:chart.html.twig' with data_exp_by_shop %}
+        {% include 'GrosComptaBundle:Analytics:chart.html.twig' with data_exp_by_user %}
     }
 </script>
 {% endblock %}
@@ -40,7 +43,7 @@
 
 {% block groscompta_body %}
 <div class="row">
-    <div id="exp_vs_inc" class="span9"></div>
+    <div id="op_by_type" class="span9"></div>
 </div>
 <div class="row">
     <div id="exp_by_cat" class="span9"></div>

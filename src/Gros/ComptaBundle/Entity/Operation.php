@@ -44,7 +44,7 @@ class Operation
 
      /**
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
 

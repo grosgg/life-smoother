@@ -25,9 +25,17 @@ class AnalyticsController extends Controller
     {
         $gros_charts_service = $this->container->get('gros_compta.charts');
 
-        $data_exp_by_cat = $gros_charts_service->getChartExpensesCategory('exp_by_cat', '2012-10-15', '2012-10-18', 'pie');
+        $data_op_by_type = $gros_charts_service->getChartExpensesIncomes('op_by_type', '2012-10-15', '2012-10-19', 'ColumnChart');
+        $data_exp_by_cat = $gros_charts_service->getChartExpensesCategory('exp_by_cat', '2012-10-15', '2012-10-19', 'PieChart');
+        $data_exp_by_shop = $gros_charts_service->getChartExpensesShop('exp_by_shop', '2012-10-15', '2012-10-19', 'PieChart');
+        $data_exp_by_user = $gros_charts_service->getChartExpensesUser('exp_by_user', '2012-10-15', '2012-10-19', 'PieChart');
 
-        return $this->render('GrosComptaBundle:Analytics:index.html.twig', array('data_exp_by_cat' => $data_exp_by_cat));
+        return $this->render('GrosComptaBundle:Analytics:index.html.twig', array(
+            'data_op_by_type' => $data_op_by_type,
+            'data_exp_by_cat' => $data_exp_by_cat,
+            'data_exp_by_shop' => $data_exp_by_shop,
+            'data_exp_by_user' => $data_exp_by_user
+        ));
     }
 
     /**
@@ -41,7 +49,7 @@ class AnalyticsController extends Controller
         $total_debit = $this->getDoctrine()
                             ->getEntityManager()
                             ->getRepository('GrosComptaBundle:Operation')
-                            ->sumAllDebit('2012-10-01', '2012-10-19');
+                            ->sumByCategory('2012-10-01', '2012-10-19');
 
         var_dump($total_debit);
     }
