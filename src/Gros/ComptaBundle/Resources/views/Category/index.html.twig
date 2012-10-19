@@ -1,6 +1,16 @@
-<h1>Category list</h1>
+{% extends "GrosComptaBundle::layout.html.twig" %}
 
-<table class="records_list">
+{% block title %}
+    Categories - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Categories
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Id</th>
@@ -18,24 +28,16 @@
             <td>{{ entity.description }}</td>
             <td>{{ entity.color }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('category_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn" href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
+                <a class="btn btn-warning" href="{{ path('category_edit', { 'id': entity.id }) }}">edit</a>
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('category_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<a class="btn btn-primary" href="{{ path('category_create') }}">
+    Create a new entry
+</a>
+
+{% endblock %}
