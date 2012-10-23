@@ -10,8 +10,8 @@ class AnalyticsFilters extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', 'date')
-            ->add('endDate', 'date')
+            ->add('startDate', 'date', array('widget' => 'single_text','label' => 'Start Date'))
+            ->add('endDate', 'date', array('widget' => 'single_text','label' => 'End Date'))
         ;
     }
 

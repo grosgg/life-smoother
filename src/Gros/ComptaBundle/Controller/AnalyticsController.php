@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Gros\ComptaBundle\Form\AnalyticsFilters;
 
 /**
  * Analytics controller.
@@ -30,11 +31,14 @@ class AnalyticsController extends Controller
         $data_exp_by_shop = $gros_charts_service->getChartExpensesShop('exp_by_shop', '2012-10-15', '2012-10-19', 'PieChart');
         $data_exp_by_user = $gros_charts_service->getChartExpensesUser('exp_by_user', '2012-10-15', '2012-10-19', 'PieChart');
 
+        $filters_form   = $this->createForm(new AnalyticsFilters());
+
         return $this->render('GrosComptaBundle:Analytics:index.html.twig', array(
             'data_op_by_type' => $data_op_by_type,
             'data_exp_by_cat' => $data_exp_by_cat,
             'data_exp_by_shop' => $data_exp_by_shop,
-            'data_exp_by_user' => $data_exp_by_user
+            'data_exp_by_user' => $data_exp_by_user,
+            'filters_form' => $filters_form->createView()
         ));
     }
 

@@ -8,7 +8,8 @@
     Analytics
 {% endblock %}
 
-{% block java_scripts %}
+{% block header_javascripts %}
+{{ parent() }}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
     // Load the Visualization API and the piechart package.
@@ -32,18 +33,38 @@
 {% block sidebar %}
 {{ parent() }}
 <h3>Filters</h3>
-<form>
-    <div class="btn-group">
-        <a class="btn btn-mini">This Week</a>
-        <a class="btn btn-mini">This Month</a>
-        <a class="btn btn-mini">This Year</a>
+<form action="{{ path('analytics') }}" method="post" {{ form_enctype(filters_form) }}>
+
+    <div class="control-group">
+        <label class="control-label" >{{ form_label(filters_form.startDate)}}</label>
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(filters_form.startDate, { 'attr': {'class': 'input-small'} }) }}
+                {{ form_errors(filters_form.startDate) }}
+            </div>
+        </div>
     </div>
-    <label>Start Date</label>
-    <input type="text">
-    <label>End Date</label>
-    <input type="text">
-    <button type="submit" class="btn">Submit</button>
+    <div class="control-group">
+        <label class="control-label" >{{ form_label(filters_form.endDate)}}</label>
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(filters_form.endDate, { 'attr': {'class': 'input-small'} }) }}
+                {{ form_errors(filters_form.endDate) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(filters_form._token) }}
+    <p>
+        <button type="submit" class="btn">Submit</button>
+    </p>
 </form>
+
+<div class="btn-group">
+    <a class="btn btn-mini filters_preset" id="this_week">This Week</a>
+    <a class="btn btn-mini filters_preset" id="this_month">This Month</a>
+    <a class="btn btn-mini filters_preset" id="this_year">This Year</a>
+</div>
 {% endblock %}
 
 {% block groscompta_body %}
@@ -59,4 +80,30 @@
 <div class="row">
     <div id="exp_by_user" class="span9"></div>
 </div>
+{% endblock %}
+
+{% block body_javascripts %}
+{{ parent() }}
+
+<script>
+$(".filters_preset").click(function(){
+    var today = new Date();
+    if ($(this).attr('id') == 'this_week') {
+        var first_day = new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+1);
+        var last_day = new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+7);
+    }
+    if ($(this).attr('id') == 'this_month') {
+        var first_day = new Date(today.getFullYear(), today.getMonth(), 1);
+        var last_day = new Date(today.getFullYear(), today.getMonth(), 30);
+    }
+    if ($(this).attr('id') == 'this_year') {
+        var first_day = new Date(today.getFullYear(), 0, 1);
+        var last_day = new Date(today.getFullYear(), 11, 31);
+    }
+    console.log(first_day+' - '+last_day);
+    $("#gros_comptabundle_analyticsfilters_startDate").val($.datepicker.formatDate('yy-mm-dd', first_day));
+    $("#gros_comptabundle_analyticsfilters_endDate").val($.datepicker.formatDate('yy-mm-dd', last_day));
+});
+
+</script>
 {% endblock %}
