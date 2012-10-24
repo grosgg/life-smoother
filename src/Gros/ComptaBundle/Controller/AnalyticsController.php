@@ -41,7 +41,7 @@ class AnalyticsController extends Controller
             $data_exp_by_cat = $gros_charts_service->getChartExpensesCategory('exp_by_cat', date('Y-m-01'), date('Y-m-30'), 'PieChart');
             $data_exp_by_shop = $gros_charts_service->getChartExpensesShop('exp_by_shop', date('Y-m-01'), date('Y-m-30'), 'PieChart');
             $data_exp_by_user = $gros_charts_service->getChartExpensesUser('exp_by_user', date('Y-m-01'), date('Y-m-30'), 'PieChart');
-            $filters_form->setData(array('startDate' => date('Y-m-01'), 'endDate' => date('Y-m-30')));
+            $filters_form->setData(array('startDate' => date_create_from_format('Y-m-d', date('Y-m-01')), 'endDate' => date_create_from_format('Y-m-d', date('Y-m-30'))));
         }
 
         return $this->render('GrosComptaBundle:Analytics:index.html.twig', array(

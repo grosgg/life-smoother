@@ -7,7 +7,7 @@ data.addColumn('{{ column.type }}', '{{ column.label }}');
 {% endfor %}
 
 {% for row in rows %}
-data.addRow(['{{ row[0] }}', {{ row[1] }}]);
+data.addRow(['{{ row[0] }}', {{ row[1] }}{% if row[2] is defined %}, {{ row[2]}}{% endif %}]);
 {% endfor %}
 
 // Set chart options

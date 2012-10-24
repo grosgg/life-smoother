@@ -27,11 +27,15 @@ class GrosCharts
 
         $columns[] = array(
             'type' => 'string',
-            'label' => 'Expenses / Incomes'
+            'label' => 'Time'
         );
         $columns[] = array(
             'type' => 'number',
-            'label' => 'Euros'
+            'label' => 'Incomes'
+        );
+        $columns[] = array(
+            'type' => 'number',
+            'label' => 'Expenses'
         );
         
         $data = $this->doctrine->getEntityManager()
@@ -39,10 +43,7 @@ class GrosCharts
             ->sumByType($startDate, $endDate);
 
         $rows = array();
-
-        foreach($data as $dataLine){
-            $rows[] = array($dataLine['type'], $dataLine['sumamount']);
-        }
+        $rows[] = array('Total', $data[1]['sumamount'], $data[0]['sumamount']);
 
         $title = 'Expenses vs Incomes';
 
