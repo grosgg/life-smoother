@@ -43,7 +43,9 @@ class GrosCharts
             ->sumByType($startDate, $endDate);
 
         $rows = array();
-        $rows[] = array('Total', $data[1]['sumamount'], $data[0]['sumamount']);
+        $expenses = !empty($data[0]) ? $data[0]['sumamount'] : 0;
+        $incomes = !empty($data[1]) ? $data[1]['sumamount'] : 0;
+        $rows[] = array('Total', $incomes, $expenses);
 
         $title = 'Expenses vs Incomes';
 
