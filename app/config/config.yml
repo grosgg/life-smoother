@@ -66,3 +66,13 @@ fos_user:
     user_class:    Gros\UserBundle\Entity\User
     group:
         group_class: Gros\USerBundle\Entity\Group
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.action:
+        sonata.block.service.rss:
