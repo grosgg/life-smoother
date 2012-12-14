@@ -37,4 +37,9 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
