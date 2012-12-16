@@ -3,7 +3,7 @@
 
 namespace Gros\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,13 +21,13 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="Gros\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="GrosUser_GrosGroup",
+     * @ORM\JoinTable(name="GrosUserGroup",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )
      */
     protected $groups;
-    
+
     /**
      * Get id
      *
@@ -38,8 +38,4 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function __toString()
-    {
-        return $this->getName();
-    }
 }

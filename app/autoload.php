@@ -3,6 +3,7 @@
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $loader = require __DIR__.'/../vendor/autoload.php';
+$loader->add('Application', __DIR__);
 
 // intl
 if (!function_exists('intl_get_error_code')) {

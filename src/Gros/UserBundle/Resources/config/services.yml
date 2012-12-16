@@ -1,6 +1,0 @@
-services:
-    gros.user.admin.user:
-        class: Gros\UserBundle\Admin\UserAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: grosuser, label: user }
-        arguments: [null, Gros\UserBundle\Entity\User, SonataAdminBundle:CRUD]

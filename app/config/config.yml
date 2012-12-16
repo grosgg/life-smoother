@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    #translator:      { fallback: %locale% }
     translator:      ~
     secret:          %secret%
     router:
@@ -47,6 +47,9 @@ doctrine:
         password: %database_password%
         charset:  UTF8
 
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
@@ -65,7 +68,7 @@ fos_user:
     firewall_name: main
     user_class:    Gros\UserBundle\Entity\User
     group:
-        group_class: Gros\USerBundle\Entity\Group
+        group_class: Gros\UserBundle\Entity\Group
 
 sonata_block:
     default_contexts: [cms]
@@ -93,6 +96,28 @@ sonata_admin:
         blocks:
             # display a dashboard block
             - { position: left, type: sonata.admin.block.admin_list }
-        groups:
-            grosuser:
-                label: Users
+
+sonata_user:
+    security_acl:           false
+
+    class:                  # Entity Classes
+        user:               Gros\UserBundle\Entity\User
+        group:              Gros\UserBundle\Entity\Group
+
+    admin:                  # Admin Classes
+        user:
+            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+        group:
+            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+    profile:  # Profile Form (firstname, lastname, etc ...)
+        form:
+            type:               sonata_user_profile
+            handler:            sonata.user.profile.form.handler.default
+            name:               sonata_user_profile_form
+            validation_groups:  [Profile]
