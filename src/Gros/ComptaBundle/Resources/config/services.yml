@@ -5,3 +5,9 @@ services:
     gros_compta.charts:
         class: Gros\ComptaBundle\Service\GrosCharts
         arguments: [@doctrine]
+
+    gros.compta.admin.shops:
+        class: Gros\ComptaBundle\Admin\ShopAdmin
+        arguments: [null, Gros\ComptaBundle\Entity\Shop, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Shops }

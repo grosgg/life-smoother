@@ -11,14 +11,14 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/archive/bb0aebbf234db52df476a2b473d434745b34221c.zip",
+                "url": "https://github.com/doctrine/common/zipball/bb0aebbf234db52df476a2b473d434745b34221c",
                 "reference": "bb0aebbf234db52df476a2b473d434745b34221c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-09-20 05:55:18",
+            "time": "1348120518",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -31,7 +31,6 @@
                     "Doctrine\\Common": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -89,7 +88,7 @@
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-12-04 21:06:56",
+            "time": "1354655216",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -102,7 +101,6 @@
                     "Doctrine\\DBAL": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -177,7 +175,6 @@
                     "Doctrine\\Bundle\\DoctrineBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -244,7 +241,6 @@
                     "Doctrine\\ORM": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -308,7 +304,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "2012-12-11 10:26:01",
+            "time": "1355221561",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -321,7 +317,6 @@
                     "FOS\\UserBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -459,7 +454,6 @@
                     "JMS\\DiExtraBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -566,7 +560,6 @@
                     "JMS\\SecurityExtraBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -598,7 +591,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/KnpLabs/KnpMenu/archive/v1.1.2.zip",
+                "url": "https://github.com/KnpLabs/KnpMenu/zipball/v1.1.2",
                 "reference": "v1.1.2",
                 "shasum": ""
             },
@@ -615,7 +608,7 @@
                 "silex/silex": "for the integration with your silex application",
                 "twig/twig": "for the TwigRenderer and the integration with your templates"
             },
-            "time": "2012-06-10 16:20:40",
+            "time": "1339345240",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -628,7 +621,6 @@
                     "Knp\\Menu\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -672,7 +664,7 @@
                 "knplabs/knp-menu": "1.1.*",
                 "symfony/framework-bundle": ">=2.0,<2.3-dev"
             },
-            "time": "2012-11-28 20:05:09",
+            "time": "1354133109",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -680,7 +672,6 @@
                     "Knp\\Bundle\\MenuBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -735,7 +726,7 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "2012-12-14 18:31:26",
+            "time": "1355509886",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -751,7 +742,6 @@
                     "src/functions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -795,7 +785,7 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server"
             },
-            "time": "2012-12-14 11:27:44",
+            "time": "1355484464",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -808,7 +798,6 @@
                     "Monolog": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -858,7 +847,6 @@
                     "Sensio\\Bundle\\DistributionBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -906,7 +894,6 @@
                     "Sensio\\Bundle\\FrameworkExtraBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -958,7 +945,6 @@
                     "Sensio\\Bundle\\GeneratorBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1007,7 +993,7 @@
                 "sonata-project/doctrine-orm-admin-bundle": "dev-master",
                 "sonata-project/intl-bundle": "dev-master"
             },
-            "time": "2012-12-14 12:35:14",
+            "time": "1355488514",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1015,7 +1001,6 @@
                     "Sonata\\AdminBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1066,7 +1051,7 @@
                 "sonata-project/admin-bundle": "dev-master",
                 "sonata-project/cache-bundle": "dev-master"
             },
-            "time": "2012-12-05 10:46:30",
+            "time": "1354704390",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1074,7 +1059,6 @@
                     "Sonata\\BlockBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1107,7 +1091,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataCacheBundle/archive/d4060e0599f24b096885c7070c194e2c27598bc3.zip",
+                "url": "https://github.com/sonata-project/SonataCacheBundle/zipball/d4060e0599f24b096885c7070c194e2c27598bc3",
                 "reference": "d4060e0599f24b096885c7070c194e2c27598bc3",
                 "shasum": ""
             },
@@ -1128,7 +1112,7 @@
                 "ext-apc": "Caching with ext/apc",
                 "ext-memcached": "Caching with ext/memcached"
             },
-            "time": "2012-10-23 23:05:43",
+            "time": "1351033543",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1136,7 +1120,6 @@
                     "Sonata\\CacheBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1175,7 +1158,7 @@
                 "php": ">=5.3.2",
                 "doctrine/orm": "*"
             },
-            "time": "2012-09-28 12:21:53",
+            "time": "1348834913",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1183,7 +1166,6 @@
                     "Sonata\\Doctrine\\Types": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1226,7 +1208,7 @@
                 "doctrine/orm": ">=2.2,<2.4-dev",
                 "symfony/symfony": ">=2.1,<2.3-dev"
             },
-            "time": "2012-11-25 20:37:31",
+            "time": "1353875851",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1234,7 +1216,6 @@
                     "Sonata\\DoctrineORMAdminBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1280,7 +1261,7 @@
                 "symfony/console": "2.*",
                 "symfony/finder": "2.*"
             },
-            "time": "2012-11-26 23:12:18",
+            "time": "1353971538",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1288,7 +1269,6 @@
                     "Sonata\\EasyExtendsBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1330,7 +1310,7 @@
             "suggest": {
                 "ext-curl": "*"
             },
-            "time": "2012-12-14 12:45:51",
+            "time": "1355489151",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1338,7 +1318,6 @@
                     "Exporter": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1376,7 +1355,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-10-27 13:53:48",
+            "time": "1351346028",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1384,7 +1363,6 @@
                     "Google\\Authenticator": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1420,7 +1398,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonatajQueryBundle/archive/5f87a761302e6c78304e071416f75d41eb1fb3c2.zip",
+                "url": "https://github.com/sonata-project/SonatajQueryBundle/zipball/5f87a761302e6c78304e071416f75d41eb1fb3c2",
                 "reference": "5f87a761302e6c78304e071416f75d41eb1fb3c2",
                 "shasum": ""
             },
@@ -1428,7 +1406,7 @@
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": "2.*"
             },
-            "time": "2012-08-29 23:34:42",
+            "time": "1346283282",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1436,7 +1414,6 @@
                     "Sonata\\jQueryBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1487,7 +1464,7 @@
             "suggest": {
                 "sonata-project/doctrine-orm-admin-bundle": "dev-master"
             },
-            "time": "2012-12-03 15:43:08",
+            "time": "1354549388",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1495,7 +1472,6 @@
                     "Sonata\\UserBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1548,7 +1524,6 @@
                     "lib/swift_required.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -1613,7 +1588,6 @@
                     "Symfony\\Bundle\\AsseticBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1671,7 +1645,6 @@
                     "Symfony\\Bundle\\MonologBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1726,7 +1699,6 @@
                     "Symfony\\Bundle\\SwiftmailerBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1817,7 +1789,6 @@
                     "SessionHandlerInterface": "src/Symfony/Component/HttpFoundation/Resources/stubs"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1867,7 +1838,6 @@
                     "Twig_": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3"
             ],

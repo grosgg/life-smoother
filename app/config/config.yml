@@ -69,6 +69,11 @@ fos_user:
     user_class:    Gros\UserBundle\Entity\User
     group:
         group_class: Gros\UserBundle\Entity\Group
+    profile:  # Authentication Form
+        form:
+            type:       fos_user_profile
+            handler:    fos_user.profile.form.handler.default
+            name:       fos_user_profile_form
 
 sonata_block:
     default_contexts: [cms]

@@ -91,4 +91,14 @@ class Shop
     {
         return $this->description;
     }
+    
+     /**
+     * Get display title
+     *
+     * @return string 
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
