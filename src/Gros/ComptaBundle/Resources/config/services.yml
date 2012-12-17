@@ -11,3 +11,9 @@ services:
         arguments: [null, Gros\ComptaBundle\Entity\Shop, 'SonataAdminBundle:CRUD']
         tags:
             - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Shops }
+
+    gros.compta.admin.categories:
+        class: Gros\ComptaBundle\Admin\CategoryAdmin
+        arguments: [null, Gros\ComptaBundle\Entity\Category, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Categories }

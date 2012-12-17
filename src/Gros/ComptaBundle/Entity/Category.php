@@ -121,4 +121,14 @@ class Category
     {
         return $this->color;
     }
+
+     /**
+     * Get display title
+     *
+     * @return string 
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
