@@ -159,4 +159,71 @@ class GrosCharts
                 'chartShape' => $chartShape,
         );
     }
+
+    public function getChartAutoEstimations($targetDiv, $monthsBase, $chartShape='LineChart')
+    {
+        $columns = array();
+
+        $columns[] = array(
+            'type' => 'string',
+            'label' => 'Time'
+        );
+        $columns[] = array(
+            'type' => 'number',
+            'label' => 'Expenses'
+        );
+        $columns[] = array(
+            'type' => 'number',
+            'label' => 'Incomes'
+        );
+
+        // Deciding date range based on monthsBase param
+        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
+        switch ($monthsBase) {
+            case 12:
+                $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')-1));
+                break;
+            
+            case 9:
+            case 6:
+            case 3:
+                $startDate = date('Y-m-d', mktime(0, 0, 0, date('m')-$monthsBase, 1, date('Y')));
+                break;
+            
+            case 1:
+            default:
+                $startDate = date('Y-m-d', mktime(0, 0, 0, date('m')-1, 1, date('Y')));
+                break;
+        }
+        
+        // Getting initial lines for average calculation
+        $initialData = $this->doctrine->getEntityManager()
+            ->getRepository('GrosComptaBundle:Operation')
+            ->sumByType($startDate, $endDate);
+
+        // Calculating the averages based on past months operations
+        $estimationBase = array();
+        foreach ($initialData as $row) {
+            $estimationBase[$row['type']] = $row['sumamount'] / $monthsBase;
+        }
+        //print_r($startDate . ' - ' . $endDate . ' - ' . $initialData . ' - ' . $estimationBase);die;
+
+        // Cumulating sums for each future month
+        $rows = array();
+        $rows[] = array(0, 0, 0);
+
+        for($i=1; $i<=24; $i++){
+            $rows[] = array($i, $rows[$i-1][1] + $estimationBase[0], $rows[$i-1][2] + $estimationBase[1]);
+        }
+
+        $title = 'Automatic Estimations';
+
+        return array(
+                'columns' => $columns,
+                'rows' => $rows,
+                'title' => $title,
+                'target' => $targetDiv,
+                'chartShape' => $chartShape,
+        );
+    }
 }
