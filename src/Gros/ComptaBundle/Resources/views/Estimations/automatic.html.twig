@@ -23,17 +23,45 @@
     // draws it.
     function drawChart() {
         {% include 'GrosComptaBundle:Estimations:chart.html.twig' with data_auto_estimations %}
+
+        // Instantiate the event listener
+        google.visualization.events.addListener(chart, 'select', function() {
+            var selection = chart.getSelection();
+            var expenses = data.getFormattedValue(selection[0].row, 1);
+            var incomes = data.getFormattedValue(selection[0].row, 2);
+
+            updateSummary(selection[0].row, expenses, incomes, incomes-expenses);
+        });
+    }
+
+    function updateSummary(months, expenses, incomes, savings) {
+        $('span#earn').html(parseFloat(incomes).toFixed(2));
+        $('span#spend').html(parseFloat(expenses).toFixed(2));
+        $('span#save').html(parseFloat(savings).toFixed(2));
+        $('span#next_months').html(months);
+        $('div#summary').show();
     }
 </script>
 {% endblock %}
 
 {% block sidebar %}
 {{ parent() }}
+<h3>Time Base</h3>
+
+<div class="btn-group">
+    <a href="{{ path('estimations_automatic', {'base':1}) }}" class="btn btn-mini" id="one_month">1</a>
+    <a href="{{ path('estimations_automatic', {'base':3}) }}" class="btn btn-mini" id="three_months">3</a>
+    <a href="{{ path('estimations_automatic', {'base':6}) }}" class="btn btn-mini" id="six_months">6</a>
+    <a href="{{ path('estimations_automatic', {'base':12}) }}" class="btn btn-mini" id="twelve_months">12 months</a>
+</div>
 {% endblock %}
 
 {% block groscompta_body %}
 <div class="row">
     <div id="auto_estimations" class="span9"></div>
+</div>
+<div class="row" id="summary" style="display:none">
+    <p>Based on the last X months, you will earn <span id="earn">0</span>€, spend <span id="spend">0</span>€ and save <span id="save">0</span>€ in <span id="next_months">1</span> month(s).</p>
 </div>
 {% endblock %}
 

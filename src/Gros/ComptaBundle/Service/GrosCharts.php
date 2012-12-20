@@ -210,10 +210,12 @@ class GrosCharts
 
         // Cumulating sums for each future month
         $rows = array();
-        $rows[] = array(0, 0, 0);
+        $rows[] = array('Now', 0, 0);
 
-        for($i=1; $i<=24; $i++){
-            $rows[] = array($i, $rows[$i-1][1] + $estimationBase[0], $rows[$i-1][2] + $estimationBase[1]);
+        if (!empty($estimationBase)) {
+            for($i=1; $i<=24; $i++){
+                $rows[] = array($i, $rows[$i-1][1] + $estimationBase[0], $rows[$i-1][2] + $estimationBase[1]);
+            }
         }
 
         $title = 'Automatic Estimations';

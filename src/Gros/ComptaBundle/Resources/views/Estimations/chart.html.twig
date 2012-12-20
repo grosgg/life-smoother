@@ -13,6 +13,15 @@ data.addRow(['{{ row[0] }}', {{ row[1] }}{% if row[2] is defined %}, {{ row[2]}}
 // Set chart options
 var options = {
     'title':'{{ title }}',
+    'hAxis':{
+        title:'Months',
+        showTextEvery:3
+    },
+    'vAxis':{
+        title:'Euros',
+        format:'#€'
+    },
+    'colors':['red','blue'],
     'width':675,
     'height':450,
 };
