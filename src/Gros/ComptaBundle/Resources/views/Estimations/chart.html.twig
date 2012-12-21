@@ -7,7 +7,16 @@ data.addColumn('{{ column.type }}', '{{ column.label }}');
 {% endfor %}
 
 {% for row in rows %}
-data.addRow(['{{ row[0] }}', {{ row[1] }}{% if row[2] is defined %}, {{ row[2]}}{% endif %}]);
+data.addRow([{% for key in row|keys %}
+    {% if key == 0 %}
+        '{{ row[0] }}',
+    {% else %}
+        {{ row[key] }}
+        {% if row[key+1] is defined %}
+            , 
+        {% endif %}
+    {% endif %}
+{% endfor %}]);
 {% endfor %}
 
 // Set chart options
@@ -21,7 +30,7 @@ var options = {
         title:'Euros',
         format:'#€'
     },
-    'colors':['red','blue'],
+    'colors':['red','green','blue'],
     'width':675,
     'height':450,
 };

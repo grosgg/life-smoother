@@ -29,8 +29,9 @@
             var selection = chart.getSelection();
             var expenses = data.getFormattedValue(selection[0].row, 1);
             var incomes = data.getFormattedValue(selection[0].row, 2);
+            var savings = data.getFormattedValue(selection[0].row, 3);
 
-            updateSummary(selection[0].row, expenses, incomes, incomes-expenses);
+            updateSummary(selection[0].row, expenses, incomes, savings);
         });
     }
 
@@ -61,7 +62,7 @@
     <div id="auto_estimations" class="span9"></div>
 </div>
 <div class="row" id="summary" style="display:none">
-    <p>Based on the last X months, you will earn <span id="earn">0</span>€, spend <span id="spend">0</span>€ and save <span id="save">0</span>€ in <span id="next_months">1</span> month(s).</p>
+    <p>Based on the last {{ base }} months, you will earn <span id="earn">0</span>€, spend <span id="spend">0</span>€ and save <span id="save">0</span>€ in <span id="next_months">1</span> month(s).</p>
 </div>
 {% endblock %}
 

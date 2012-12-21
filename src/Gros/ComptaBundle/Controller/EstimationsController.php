@@ -30,7 +30,8 @@ class EstimationsController extends Controller
         $dataAutoEstimations = $grosChartsService->getChartAutoEstimations('auto_estimations', $request->get('base'), 'LineChart');
 
         return $this->render('GrosComptaBundle:Estimations:automatic.html.twig', array(
-            'data_auto_estimations' => $dataAutoEstimations
+            'data_auto_estimations' => $dataAutoEstimations,
+            'base'                  => $request->get('base')
         ));
     }
 
