@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Gros\ComptaBundle\Form\AnalyticsFiltersType;
-use Gros\ComptaBundle\Form\AnalyticsFiltersHandler;
 
 /**
  * Analytics controller.
@@ -23,7 +21,7 @@ class EstimationsController extends Controller
      * @Route("/automatic/{base}", defaults={"base"="1"}, name="estimations_automatic")
      * @Template()
      */
-    public function AutomaticAction(Request $request)
+    public function automaticAction(Request $request)
     {
         $grosChartsService = $this->container->get('gros_compta.charts');
 
