@@ -25,6 +25,7 @@ class ImportController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // Uploader
         $import = new Import;
         $form = $this->createFormBuilder($import)
                  ->add('file', 'file', array('label' => 'Your CSV bank file:'))
@@ -36,8 +37,13 @@ class ImportController extends Controller
             return $this->redirect($this->generateUrl('import_parsing', array('id' => $import->getId())));
         }
 
+        // Pending imports list
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('GrosComptaBundle:Import')->findAll();
+
         return $this->render('GrosComptaBundle:Import:index.html.twig', array(
             'form' => $form->createView(),
+            'pending_imports' => $entities,
         ));
     }
 
@@ -49,5 +55,21 @@ class ImportController extends Controller
      */
     public function parsingAction(Request $request)
     {
+        $import = new Import;
+        $em = $this->getDoctrine()->getManager();
+        $import = $em->getRepository('GrosComptaBundle:Import')->find($request->get('id'));
+
+        $row = 1;
+        if (($handle = fopen($import->getAbsolutePath(), "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                echo "<p> $num fields in line $row: <br /></p>\n";
+                $row++;
+                for ($c=0; $c < $num; $c++) {
+                    echo $data[$c] . "<br />\n";
+                }
+            }
+            fclose($handle);
+        }
     }
 }

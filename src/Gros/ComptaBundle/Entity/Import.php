@@ -159,7 +159,7 @@ class Import
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
-    public function upload()
+    public function postUpload()
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {

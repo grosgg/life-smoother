@@ -23,10 +23,20 @@
 {% block groscompta_body %}
 <div class="row">
     <div class="span9">
-        <form class="form-horizontal" method="post" {{ form_enctype(form) }}>
-            {{ form_widget(form) }}
-            <input type="submit" class="btn btn-primary" value="Upload CSV"/>
-        </form>
+        <div class="well">
+            <form class="form-horizontal" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <input type="submit" class="btn btn-primary" value="Upload CSV"/>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span9">
+        <h3>Imports pending for validation</h3>
+        {% for import in pending_imports %}
+        <p><a href="{{ path('import_parsing', {'id' : import.id }) }}"><i class="icon-list"></i> {{ import.date|date("d/m/Y H:i:s") }}</a></p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
