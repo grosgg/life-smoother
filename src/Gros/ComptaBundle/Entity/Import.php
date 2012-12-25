@@ -183,4 +183,35 @@ class Import
             unlink($file);
         }
     }
+
+
+    public function parseLaBanquePostale()
+    {
+        $result = array();
+        $row = 1;
+
+        if (($handle = fopen($this->getAbsolutePath(), "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                $parsedDate = date_parse_from_format('d/m/Y', $data[0]);
+
+                if(checkdate($parsedDate['month'], $parsedDate['day'], $parsedDate['year'])) {
+                    $result[$row]['date'] = $data[0];
+                    $result[$row]['label'] = $data[1];
+                    $result[$row]['amount'] = $data[2];
+
+                    $result[$row]['parsedLabel'] = parseLabelLaBanquePostale($data[1]);
+                }
+
+                $row++;
+            }
+            fclose($handle);
+        }
+
+        return $result;
+    }
+
+    private function parseLabelLaBanquePostale()
+    {
+        
+    }
 }
