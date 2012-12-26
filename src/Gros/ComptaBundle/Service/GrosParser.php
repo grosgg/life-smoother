@@ -33,7 +33,7 @@ class GrosParser
 
         // Custom guessing user
         // TODO: Make automatic it later
-        if (strpos(strtolower($data), 'numero 879')) {
+        if (strpos($data, '879') !== false) {
             $user = $this->tomoko;
         } else {
             $user = $this->jeremy;

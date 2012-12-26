@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Gros\ComptaBundle\Entity\Import;
 use Gros\ComptaBundle\Form\ImportHandler;
+use Gros\ComptaBundle\Entity\Operation;
 
 /**
  * Data Import controller.
@@ -64,9 +65,13 @@ class ImportController extends Controller
         $grosParserService = $this->container->get('gros_compta.parser');
         $parsing = $import->parseLaBanquePostale($grosParserService);
 
+        $operation = new Operation;
+        $form = $this->createFormBuilder($operation)->getForm();
+
         return $this->render('GrosComptaBundle:Import:parsing.html.twig', array(
             'parsed_lines' => $parsing,
             'lines_count'  => count($parsing),
+            'form'         => $form->createView(),
             'shops'        => $shops,
             'categories'   => $categories,
             'users'        => $users,

@@ -22,46 +22,51 @@
 {% block groscompta_body %}
 <div class="row">
     <div class="span9">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Label</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for row in parsed_lines %}
-                <tr>
-                    <td>{{ row.date }}</td>
-                    <td>{{ row.label }}</td>
-                    <td>{{ row.signedAmount|number_format(2, '.', ',') }}</td>
-                </tr>
-                <tr>
-                    <td colspan=3>
-                        <select class="input input-small">
-                            {% for shop in shops %}
-                            <option value={{ shop.id }}>{{ shop.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <select class="input-small">
-                            {% for category in categories %}
-                            <option value={{ category.id }}>{{ category.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <select class="input-small">
-                            {% for user in users %}
-                            <option value={{ user.id }}>{{ user.username }}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="text" class=" input input-xlarge" />
-                        <input type="submit" class="btn btn-small" value="OK" />
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <p>{{ lines_count }} rows waiting to be imported.</p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Label</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in parsed_lines %}
+                    <tr>
+                        <td>{{ row.date }}</td>
+                        <td>{{ row.label }}</td>
+                        <td>{{ row.signedAmount|number_format(2, '.', ',') }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan=3>
+                            <form class="form-horizontal" method="post" {{ form_enctype(form) }}>
+                                <select name="shop" class="input input-medium">
+                                    {% for shop in shops %}
+                                    <option value={{ shop.id }} {% if row.parsedLabel.guessedShop is defined and row.parsedLabel.guessedShop == shop.id %}selected=selected{% endif %}>{{ shop.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select name="category" class="input input-small">
+                                    {% for category in categories %}
+                                    <option value={{ category.id }}>{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select name="user" class=" input input-small">
+                                    {% for user in users %}
+                                    <option value={{ user.id }} {% if row.parsedLabel.guessedUser is defined and row.parsedLabel.guessedUser == user.id %}selected=selected{% endif %}>{{ user.username }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input name="description" type="text" class="input input-large" placeholder="Description"/>
+                                <input name="amount" type="hidden" value="{{ row.absoluteAmount }}">
+                                <input name="type" type="hidden" value={{ row.type }}>
+                                <input name="date" type="hidden" value={{ row.date }}>
+                                <input type="submit" class="btn btn-primary btn-small" value="Confirm"/>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p>{{ lines_count }} rows waiting to be imported.</p>
     </div>
 </div>
 {% endblock %}
