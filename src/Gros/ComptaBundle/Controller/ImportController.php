@@ -55,15 +55,21 @@ class ImportController extends Controller
      */
     public function parsingAction(Request $request)
     {
-        $import = new Import;
         $em = $this->getDoctrine()->getManager();
         $import = $em->getRepository('GrosComptaBundle:Import')->find($request->get('id'));
+        $shops = $em->getRepository('GrosComptaBundle:Shop')->findAll();
+        $categories = $em->getRepository('GrosComptaBundle:Category')->findAll();
+        $users = $em->getRepository('GrosUserBundle:User')->findAll();
 
-        $parsing = $import->parseLaBanquePostale();
+        $grosParserService = $this->container->get('gros_compta.parser');
+        $parsing = $import->parseLaBanquePostale($grosParserService);
 
         return $this->render('GrosComptaBundle:Import:parsing.html.twig', array(
             'parsed_lines' => $parsing,
             'lines_count'  => count($parsing),
+            'shops'        => $shops,
+            'categories'   => $categories,
+            'users'        => $users,
         ));
     }
 }

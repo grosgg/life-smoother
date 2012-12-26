@@ -35,7 +35,28 @@
                 <tr>
                     <td>{{ row.date }}</td>
                     <td>{{ row.label }}</td>
-                    <td>{{ row.amount }}</td>
+                    <td>{{ row.signedAmount|number_format(2, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td colspan=3>
+                        <select class="input input-small">
+                            {% for shop in shops %}
+                            <option value={{ shop.id }}>{{ shop.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="input-small">
+                            {% for category in categories %}
+                            <option value={{ category.id }}>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="input-small">
+                            {% for user in users %}
+                            <option value={{ user.id }}>{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" class=" input input-xlarge" />
+                        <input type="submit" class="btn btn-small" value="OK" />
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

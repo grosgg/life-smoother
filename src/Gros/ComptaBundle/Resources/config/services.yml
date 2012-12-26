@@ -6,6 +6,10 @@ services:
         class: Gros\ComptaBundle\Service\GrosCharts
         arguments: [@doctrine]
 
+    gros_compta.parser:
+        class: Gros\ComptaBundle\Service\GrosParser
+        arguments: [@doctrine]
+
     gros.compta.admin.shops:
         class: Gros\ComptaBundle\Admin\ShopAdmin
         arguments: [null, Gros\ComptaBundle\Entity\Shop, 'SonataAdminBundle:CRUD']

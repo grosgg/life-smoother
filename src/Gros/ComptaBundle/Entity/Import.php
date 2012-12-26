@@ -185,10 +185,10 @@ class Import
     }
 
 
-    public function parseLaBanquePostale()
+    public function parseLaBanquePostale($grosParserService)
     {
         $result = array();
-        $row = 1;
+        $row = 0;
 
         if (($handle = fopen($this->getAbsolutePath(), "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
@@ -197,21 +197,25 @@ class Import
                 if(checkdate($parsedDate['month'], $parsedDate['day'], $parsedDate['year'])) {
                     $result[$row]['date'] = $data[0];
                     $result[$row]['label'] = $data[1];
-                    $result[$row]['amount'] = $data[2];
 
-                    $result[$row]['parsedLabel'] = parseLabelLaBanquePostale($data[1]);
+                    if ($data[2] < 0) {
+                        $result[$row]['type'] = 0;
+                    } else {
+                        $result[$row]['type'] = 1;
+                    }
+                    $result[$row]['signedAmount'] = floatval(str_replace(',', '.', $data[2]));
+                    $result[$row]['absoluteAmount'] = abs($result[$row]['signedAmount']);
+
+                    $result[$row]['parsedLabel'] = $grosParserService->parseLabelLaBanquePostale($data[1]);
+                    $row++;
                 }
 
-                $row++;
             }
             fclose($handle);
         }
 
+        //var_dump($result[0]);
         return $result;
     }
 
-    private function parseLabelLaBanquePostale()
-    {
-        
-    }
 }
