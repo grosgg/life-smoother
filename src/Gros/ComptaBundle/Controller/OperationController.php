@@ -70,10 +70,14 @@ class OperationController extends Controller
         $operation  = new Operation();
         $form = $this->createForm(new OperationType(), $operation);
 
-        $formHandler = new OperationHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager());
+        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager());
 
         if ($formHandler->process()) {
-            return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
+            if($request->isXmlHttpRequest()) {
+                return $operation->getId();
+            } else {
+                return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
+            }
         }
 
         return $this->render('GrosComptaBundle:Operation:create.html.twig', array(

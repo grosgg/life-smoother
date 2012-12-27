@@ -10,8 +10,37 @@
 
 {% block header_javascripts %}
 {{ parent() }}
+
 <script type="text/javascript">
+$(document).ready(function() {
+    $(".btn-confirm").click(function(){
+        var formId = $(this).attr('for');
+
+        var amount = $('#'+formId+' .amount').val();
+        var type = $('#'+formId+' .type').val();
+        var description = $('#'+formId+' .description').val();
+        var shop = $('#'+formId+' .shop').val();
+        var category = $('#'+formId+' .category').val();
+        var user = $('#'+formId+' .user').val();
+
+        var dataString = 'amount='+ amount + '&type=' + type + '&description=' + description + '&shop=' + shop + '&category=' + category + '&user=' +user;
+        //console.log(dataString);return false;
+
+        $.ajax({
+            type: "POST",
+            url: "{{ path('operation_create') }}",
+            data: dataString,
+            success: function(data) {
+                console.log('Ca roule!');
+                console.log(data);
+            }
+        });
+        return false;
+    });
+
+});
 </script>
+
 {% endblock %}
 
 {% block sidebar %}
@@ -39,27 +68,27 @@
                     </tr>
                     <tr>
                         <td colspan=3>
-                            <form class="form-horizontal" method="post" {{ form_enctype(form) }}>
-                                <select name="shop" class="input input-medium">
+                            <form id="form{{ loop.index0 }}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+                                <select class="shop input input-medium">
                                     {% for shop in shops %}
                                     <option value={{ shop.id }} {% if row.parsedLabel.guessedShop is defined and row.parsedLabel.guessedShop == shop.id %}selected=selected{% endif %}>{{ shop.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="category" class="input input-small">
+                                <select class="category input input-small">
                                     {% for category in categories %}
                                     <option value={{ category.id }}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="user" class=" input input-small">
+                                <select class="user input input-small">
                                     {% for user in users %}
                                     <option value={{ user.id }} {% if row.parsedLabel.guessedUser is defined and row.parsedLabel.guessedUser == user.id %}selected=selected{% endif %}>{{ user.username }}</option>
                                     {% endfor %}
                                 </select>
-                                <input name="description" type="text" class="input input-large" placeholder="Description"/>
-                                <input name="amount" type="hidden" value="{{ row.absoluteAmount }}">
-                                <input name="type" type="hidden" value={{ row.type }}>
-                                <input name="date" type="hidden" value={{ row.date }}>
-                                <input type="submit" class="btn btn-primary btn-small" value="Confirm"/>
+                                <input class="description input input-large" type="text" placeholder="Description"/>
+                                <input class="amount" type="hidden" value="{{ row.absoluteAmount }}">
+                                <input class="type" type="hidden" value={{ row.type }}>
+                                <input class="date" type="hidden" value={{ row.date }}>
+                                <input type="submit" for="form{{ loop.index0 }}" class="btn btn-confirm btn-primary btn-small" value="Confirm"/>
                             </form>
                         </td>
                     </tr>
