@@ -21,3 +21,14 @@ services:
         arguments: [null, Gros\ComptaBundle\Entity\Category, 'SonataAdminBundle:CRUD']
         tags:
             - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Categories }
+
+    gros.logger:
+        class: Symfony\Bridge\Monolog\Logger
+        arguments: [gros]
+        calls:
+            - [pushHandler, [@gros.handler]]
+
+    gros.handler:
+        class: Monolog\Handler\StreamHandler
+        # 200 = INFO, see Monolog::Logger for the values of log levels
+        arguments: [%kernel.root_dir%/logs/%kernel.environment%.gros.log, 100]

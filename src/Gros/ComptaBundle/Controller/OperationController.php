@@ -67,12 +67,12 @@ class OperationController extends Controller
      */
     public function createAction(Request $request)
     {
-        $logger = $this->get('logger');
+        $logger = $this->container->get('gros.logger');
         $logger->debug($request);
         $operation  = new Operation();
         $form = $this->createForm(new OperationType(), $operation);
 
-        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager());
+        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $logger);
 
         if ($formHandler->process()) {
             $logger->debug('Operation processed');
