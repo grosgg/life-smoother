@@ -6,6 +6,9 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Gros\ComptaBundle\Entity\Operation;
+//use Symfony\Bridge\Monolog\Logger;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class OperationHandler
 {
@@ -22,8 +25,15 @@ class OperationHandler
 
     public function process()
     {
+        $logger = new Logger('my_logger');
+        //$logger->debug('Je suis gros.');
+        $logger->pushHandler(new StreamHandler(__DIR__.'/../../../../app/logs/gros.log', Logger::DEBUG));
+        $logger->addDebug('Processing...');
+
         if($this->request->getMethod() == 'POST') {
-            $this->form->bindRequest($this->request);
+            $logger->addDebug($this->request);
+            $logger->addDebug($this->form->bindRequest($this->request));
+            $logger->addDebug('data: ' . $this->form->getData());
 
             if($this->form->isValid()) {
                 $this->onSuccess($this->form->getData());

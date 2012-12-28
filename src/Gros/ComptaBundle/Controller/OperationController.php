@@ -67,12 +67,15 @@ class OperationController extends Controller
      */
     public function createAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->debug($request);
         $operation  = new Operation();
         $form = $this->createForm(new OperationType(), $operation);
 
         $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager());
 
         if ($formHandler->process()) {
+            $logger->debug('Operation processed');
             if($request->isXmlHttpRequest()) {
                 return $operation->getId();
             } else {
