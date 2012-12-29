@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManager;
 
 class OperationType extends AbstractType
 {
+    private $name = 'gros_comptabundle_operationtype';
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -41,6 +43,11 @@ class OperationType extends AbstractType
 
     public function getName()
     {
-        return 'gros_comptabundle_operationtype';
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

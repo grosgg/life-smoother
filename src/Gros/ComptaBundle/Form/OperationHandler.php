@@ -27,9 +27,15 @@ class OperationHandler
         if($this->request->getMethod() == 'POST') {
             $this->logger->debug('Request is POST.');
 
+            $this->form->bind($this->request);
+            $this->logger->debug('Request is bound to form.');
+
             if($this->form->isValid()) {
+                $this->logger->debug('Form is valid.');
                 $this->onSuccess($this->form->getData());
                 return true;
+            } else {
+                $this->logger->debug(json_encode($this->form->getErrors()));
             }
         }
 

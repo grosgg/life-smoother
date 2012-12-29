@@ -195,7 +195,7 @@ class Import
                 $parsedDate = date_parse_from_format('d/m/Y', $data[0]);
 
                 if(checkdate($parsedDate['month'], $parsedDate['day'], $parsedDate['year'])) {
-                    $result[$row]['date'] = $data[0];
+                    $result[$row]['date'] = $parsedDate['year'] . '-' . $parsedDate['month'] . '-' . $parsedDate['day'];
                     $result[$row]['label'] = $data[1];
 
                     if ($data[2] < 0) {

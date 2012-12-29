@@ -68,16 +68,23 @@ class OperationController extends Controller
     public function createAction(Request $request)
     {
         $logger = $this->container->get('gros.logger');
-        $logger->debug($request);
         $operation  = new Operation();
-        $form = $this->createForm(new OperationType(), $operation);
+        $operationType = new OperationType();
+
+        $formId = $request->get('form_id');
+        if ($formId != null) {
+            $newFormName = $operationType->getName() . '_' . $formId;
+            $operationType->setName($newFormName);
+        }
+
+        $form = $this->createForm($operationType, $operation);
 
         $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $logger);
 
         if ($formHandler->process()) {
             $logger->debug('Operation processed');
             if($request->isXmlHttpRequest()) {
-                return $operation->getId();
+                die(json_encode(array('status' => 200, 'operation' => $operation->getId(), 'form' => $formId)));
             } else {
                 return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
             }

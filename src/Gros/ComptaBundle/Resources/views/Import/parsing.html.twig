@@ -13,26 +13,24 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".btn-confirm").click(function(){
-        var formId = $(this).attr('for');
+    var count = {{ lines_count }};
 
-        var amount = $('#'+formId+' .amount').val();
-        var type = $('#'+formId+' .type').val();
-        var description = $('#'+formId+' .description').val();
-        var shop = $('#'+formId+' .shop').val();
-        var category = $('#'+formId+' .category').val();
-        var user = $('#'+formId+' .user').val();
-
-        var dataString = 'amount='+ amount + '&type=' + type + '&description=' + description + '&shop=' + shop + '&category=' + category + '&user=' +user;
-        //console.log(dataString);return false;
-
+    $("form").submit(function(){
         $.ajax({
             type: "POST",
             url: "{{ path('operation_create') }}",
-            data: dataString,
-            success: function(data) {
-                console.log('Ca roule!');
-                console.log(data);
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(msg) {
+                if (msg.status == 200) {
+                    $('form[row="'+msg.form+'"] > input').attr('disabled', 'disabled');
+                    $('form[row="'+msg.form+'"] > select').attr('disabled', 'disabled');
+                    $('form[row="'+msg.form+'"]').parent().parent().prev().addClass('success');
+                    $('form[row="'+msg.form+'"] > input[type="submit"]').after(' <i class="icon-ok"></i>');
+                    $('form[row="'+msg.form+'"]').parent().delay(3000).fadeOut();
+                    count = count -1;
+                    $('#count').html(count);
+                }
             }
         });
         return false;
@@ -41,6 +39,13 @@ $(document).ready(function() {
 });
 </script>
 
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    form { margin-bottom: 10px; }
+</style>
 {% endblock %}
 
 {% block sidebar %}
@@ -63,39 +68,41 @@ $(document).ready(function() {
                     {% for row in parsed_lines %}
                     <tr>
                         <td>{{ row.date }}</td>
-                        <td>{{ row.label }}</td>
+                        <td>{{ row.label|slice(0, 65) }}</td>
                         <td>{{ row.signedAmount|number_format(2, '.', ',') }}</td>
                     </tr>
                     <tr>
                         <td colspan=3>
-                            <form id="form{{ loop.index0 }}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
-                                <select class="shop input input-medium">
+                            <form class="form-horizontal" row="{{ loop.index0 }}" method="post" {{ form_enctype(forms[loop.index0]) }}>
+                                <select name="{{ forms[loop.index0].shop.vars.full_name}}" class="input input-medium">
                                     {% for shop in shops %}
                                     <option value={{ shop.id }} {% if row.parsedLabel.guessedShop is defined and row.parsedLabel.guessedShop == shop.id %}selected=selected{% endif %}>{{ shop.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select class="category input input-small">
+                                <select name="{{ forms[loop.index0].category.vars.full_name}}" class="input input-small">
                                     {% for category in categories %}
                                     <option value={{ category.id }}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select class="user input input-small">
+                                <select name="{{ forms[loop.index0].user.vars.full_name}}" class="input input-small">
                                     {% for user in users %}
                                     <option value={{ user.id }} {% if row.parsedLabel.guessedUser is defined and row.parsedLabel.guessedUser == user.id %}selected=selected{% endif %}>{{ user.username }}</option>
                                     {% endfor %}
                                 </select>
-                                <input class="description input input-large" type="text" placeholder="Description"/>
-                                <input class="amount" type="hidden" value="{{ row.absoluteAmount }}">
-                                <input class="type" type="hidden" value={{ row.type }}>
-                                <input class="date" type="hidden" value={{ row.date }}>
-                                <input type="submit" for="form{{ loop.index0 }}" class="btn btn-confirm btn-primary btn-small" value="Confirm"/>
+                                <input name="{{ forms[loop.index0].description.vars.full_name}}" class="input input-large" type="text" placeholder="Description"/>
+                                <input name="{{ forms[loop.index0].amount.vars.full_name}}" type="hidden" value="{{ row.absoluteAmount }}">
+                                <input name="{{ forms[loop.index0].type.vars.full_name}}" type="hidden" value={{ row.type }}>
+                                <input name="{{ forms[loop.index0].date.vars.full_name}}" type="hidden" value={{ row.date }}>
+                                <input name="form_id" type="hidden" value={{ loop.index0 }}>
+                                {{ form_row(forms[loop.index0]._token) }}
+                                <input type="submit" class="btn btn-confirm btn-primary btn-small" value="Confirm"/>
                             </form>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <p>{{ lines_count }} rows waiting to be imported.</p>
+            <p><span id="count">{{ lines_count }}</span> rows waiting to be imported.</p>
     </div>
 </div>
 {% endblock %}
