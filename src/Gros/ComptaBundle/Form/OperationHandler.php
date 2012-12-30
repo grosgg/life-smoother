@@ -25,10 +25,8 @@ class OperationHandler
     public function process()
     {
         if($this->request->getMethod() == 'POST') {
-            $this->logger->debug('Request is POST.');
 
             $this->form->bind($this->request);
-            $this->logger->debug('Request is bound to form.');
 
             if($this->form->isValid()) {
                 $this->logger->debug('Form is valid.');

@@ -3,12 +3,15 @@
 namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * Gros\ComptaBundle\Entity\Operation
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Gros\ComptaBundle\Entity\OperationRepository")
+ * @Assert\Callback(methods={"isDuplicate"})
  */
 class Operation
 {
@@ -244,5 +247,17 @@ class Operation
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Is duplicate
+     *
+     * @param ExecutionContext $context
+     */
+    public function isDuplicate(ExecutionContext $context)
+    {
+        if ($this->checkDuplicate($this->getAmount(), $this->getShop(), $this->getDate()) === true) {
+            $context->addViolation('This opeartion already exists in the system', array(), null);
+        }
     }
 }

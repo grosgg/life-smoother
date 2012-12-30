@@ -89,5 +89,22 @@ class OperationRepository extends EntityRepository
 
         return $qb;
     }
+
+    public function checkDuplicate($amount, $shop, $date)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select()
+            ->from('GrosComptaBundle:Operation')
+            ->where('amount = :amount')
+            ->where('shop = :shop')
+            ->where('date = :date')
+            ->setParameter('amount', $amount)
+            ->setParameter('shop', $shop)
+            ->setParameter('date', $date);
+
+        $result = $qb->getQuery()->getResult();
+        return empty($result);
+    }
 }
 
