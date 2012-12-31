@@ -30,10 +30,14 @@ class OperationHandler
 
             if($this->form->isValid()) {
                 $this->logger->debug('Form is valid.');
+
                 $this->onSuccess($this->form->getData());
                 return true;
             } else {
-                $this->logger->debug(json_encode($this->form->getErrors()));
+                $this->logger->debug('Form is invalid.');
+                $this->logger->debug(json_encode($this->form->hasErrors()));
+                $this->logger->debug(json_encode($this->form->isEmpty()));
+                $this->logger->debug($this->form->getErrorsAsString());
             }
         }
 
