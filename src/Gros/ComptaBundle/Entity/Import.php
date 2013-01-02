@@ -43,12 +43,12 @@ class Import
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
      * @Assert\File(maxSize="50000")
      */
-    public $file;
+    private $file;
 
 
     public function __construct()

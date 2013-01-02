@@ -99,6 +99,7 @@ class ImportController extends Controller
             'shops'        => $shops,
             'categories'   => $categories,
             'users'        => $users,
+            'importId'     => $import->getId(),
         ));
     }
 }

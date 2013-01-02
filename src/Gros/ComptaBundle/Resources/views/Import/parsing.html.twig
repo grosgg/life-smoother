@@ -109,6 +109,7 @@ $(document).ready(function() {
                                 <input name="{{ forms[key].type.vars.full_name}}" type="hidden" value={{ row.type }}>
                                 <input name="{{ forms[key].date.vars.full_name}}" type="hidden" value={{ row.date }}>
                                 <input name="form_id" type="hidden" value={{ key }}>
+                                <input name="import_id" type="hidden" value={{ importId }}>
                                 {{ form_row(forms[key]._token) }}
                                 <input type="submit" class="btn btn-confirm btn-primary btn-small" value="Confirm"/>
                             </form>

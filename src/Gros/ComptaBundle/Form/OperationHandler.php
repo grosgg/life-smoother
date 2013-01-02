@@ -29,13 +29,9 @@ class OperationHandler
             $this->form->bind($this->request);
 
             if($this->form->isValid()) {
-                $this->logger->debug('Form is valid.');
-
                 $this->onSuccess($this->form->getData());
                 return true;
             } else {
-                $this->logger->debug('Form is invalid.');
-
                 if($this->request->isXmlHttpRequest() && $this->form->hasChildren()) {
                     $errors = array();
 
@@ -49,7 +45,6 @@ class OperationHandler
                     }
                     die(json_encode(array('status' => false, 'errors' => $errors, 'form' => $this->request->get('form_id'))));
                 }
-
                 $this->logger->debug($this->form->getErrorsAsString());
             }
         }
