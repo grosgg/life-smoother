@@ -94,17 +94,17 @@ class OperationRepository extends EntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
 
-        $qb->select()
-            ->from('GrosComptaBundle:Operation')
-            ->where('amount = :amount')
-            ->where('shop = :shop')
-            ->where('date = :date')
-            ->setParameter('amount', $amount)
-            ->setParameter('shop', $shop)
-            ->setParameter('date', $date);
+        $qb->select('o.id')
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->where('o.amount = :amount')
+                ->setParameter('amount', $amount)
+            ->andWhere('o.shop = :shop')
+                ->setParameter('shop', $shop)
+            ->andWhere('o.date = :date')
+                ->setParameter('date', $date);
 
         $result = $qb->getQuery()->getResult();
-        return empty($result);
+        return !empty($result);
     }
 }
 

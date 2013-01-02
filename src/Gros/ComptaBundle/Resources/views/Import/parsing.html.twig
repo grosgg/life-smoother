@@ -80,7 +80,7 @@ $(document).ready(function() {
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in parsed_lines %}
+                    {% for key, row in parsed_lines %}
                     <tr>
                         <td>{{ row.date }}</td>
                         <td>{{ row.label|slice(0, 65) }}</td>
@@ -88,28 +88,28 @@ $(document).ready(function() {
                     </tr>
                     <tr>
                         <td colspan=3>
-                            <form class="form-horizontal" row="{{ loop.index0 }}" method="post" {{ form_enctype(forms[loop.index0]) }}>
-                                <select name="{{ forms[loop.index0].shop.vars.full_name}}" class="input input-medium">
+                            <form class="form-horizontal" row="{{ key }}" method="post" {{ form_enctype(forms[key]) }}>
+                                <select name="{{ forms[key].shop.vars.full_name}}" class="input input-medium">
                                     {% for shop in shops %}
                                     <option value={{ shop.id }} {% if row.parsedLabel.guessedShop is defined and row.parsedLabel.guessedShop == shop.id %}selected=selected{% endif %}>{{ shop.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="{{ forms[loop.index0].category.vars.full_name}}" class="input input-small">
+                                <select name="{{ forms[key].category.vars.full_name}}" class="input input-small">
                                     {% for category in categories %}
                                     <option value={{ category.id }}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="{{ forms[loop.index0].user.vars.full_name}}" class="input input-small">
+                                <select name="{{ forms[key].user.vars.full_name}}" class="input input-small">
                                     {% for user in users %}
                                     <option value={{ user.id }} {% if row.parsedLabel.guessedUser is defined and row.parsedLabel.guessedUser == user.id %}selected=selected{% endif %}>{{ user.username }}</option>
                                     {% endfor %}
                                 </select>
-                                <input name="{{ forms[loop.index0].description.vars.full_name}}" class="input input-large" type="text" placeholder="Description"/>
-                                <input name="{{ forms[loop.index0].amount.vars.full_name}}" type="hidden" value="{{ row.absoluteAmount }}">
-                                <input name="{{ forms[loop.index0].type.vars.full_name}}" type="hidden" value={{ row.type }}>
-                                <input name="{{ forms[loop.index0].date.vars.full_name}}" type="hidden" value={{ row.date }}>
-                                <input name="form_id" type="hidden" value={{ loop.index0 }}>
-                                {{ form_row(forms[loop.index0]._token) }}
+                                <input name="{{ forms[key].description.vars.full_name}}" class="input input-large" type="text" placeholder="Description"/>
+                                <input name="{{ forms[key].amount.vars.full_name}}" type="hidden" value="{{ row.absoluteAmount }}">
+                                <input name="{{ forms[key].type.vars.full_name}}" type="hidden" value={{ row.type }}>
+                                <input name="{{ forms[key].date.vars.full_name}}" type="hidden" value={{ row.date }}>
+                                <input name="form_id" type="hidden" value={{ key }}>
+                                {{ form_row(forms[key]._token) }}
                                 <input type="submit" class="btn btn-confirm btn-primary btn-small" value="Confirm"/>
                             </form>
                         </td>

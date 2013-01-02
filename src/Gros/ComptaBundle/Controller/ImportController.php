@@ -58,6 +58,8 @@ class ImportController extends Controller
     public function parsingAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $operationRepository = $em->getRepository('GrosComptaBundle:Operation');
+
         $import = $em->getRepository('GrosComptaBundle:Import')->find($request->get('id'));
         $shops = $em->getRepository('GrosComptaBundle:Shop')->findAll();
         $categories = $em->getRepository('GrosComptaBundle:Category')->findAll();
@@ -70,10 +72,24 @@ class ImportController extends Controller
         $operationForm = new OperationType();
         $operationFormDefaultName = $operationForm->getName();
         $forms = array();
-        for ($i=0; $i<count($parsing); $i++) {
-            $operationForm->setName($operationFormDefaultName . '_' . $i);
-            $form = $this->createForm($operationForm, $operation);
-            $forms[$i] = $form->createView();
+        $parsingTotalCount = count($parsing);
+
+        for ($i=0; $i<$parsingTotalCount; $i++) {
+            // Need to define what shop to use for duplicate checking
+            if (isset($parsing[$i]['parsedLabel']['guessedShop'])) {
+                $guessedShop = $parsing[$i]['parsedLabel']['guessedShop'];
+            } else {
+                $guessedShop = $shops[0]->getId();
+            }
+
+            // When a duplicate is found, we don't display the line again
+            if ($operationRepository->checkDuplicate($parsing[$i]['absoluteAmount'], $guessedShop, $parsing[$i]['date'])) {
+                unset ($parsing[$i]);
+            } else {
+                $operationForm->setName($operationFormDefaultName . '_' . $i);
+                $form = $this->createForm($operationForm, $operation);
+                $forms[$i] = $form->createView();
+            }
         }
 
         return $this->render('GrosComptaBundle:Import:parsing.html.twig', array(
