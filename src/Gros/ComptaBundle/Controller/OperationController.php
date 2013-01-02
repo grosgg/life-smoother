@@ -81,11 +81,13 @@ class OperationController extends Controller
 
         $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $logger);
 
-        if ($formHandler->process()) {
-            $logger->debug('Operation processed');
-            if($request->isXmlHttpRequest()) {
+        // Different process depending on form origin
+        if($request->isXmlHttpRequest()) {
+            if ($formHandler->processAjax()) {
                 die(json_encode(array('status' => true, 'operation' => $operation->getId(), 'form' => $formId)));
-            } else {
+            }
+        } else {
+            if ($formHandler->process()) {
                 return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
             }
         }

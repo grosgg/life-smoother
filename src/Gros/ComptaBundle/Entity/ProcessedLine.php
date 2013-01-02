@@ -5,12 +5,12 @@ namespace Gros\ComptaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gros\ComptaBundle\Entity\ImportedLine
+ * Gros\ComptaBundle\Entity\ProcessedLine
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class ImportedLine
+class ProcessedLine
 {
     /**
      * @var integer

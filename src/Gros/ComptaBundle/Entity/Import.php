@@ -48,7 +48,7 @@ class Import
     /**
      * @Assert\File(maxSize="50000")
      */
-    private $file;
+    public $file;
 
 
     public function __construct()
