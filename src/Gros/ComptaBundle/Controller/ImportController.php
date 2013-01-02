@@ -72,18 +72,17 @@ class ImportController extends Controller
         $operationForm = new OperationType();
         $operationFormDefaultName = $operationForm->getName();
         $forms = array();
-        $parsingTotalCount = count($parsing);
 
-        for ($i=0; $i<$parsingTotalCount; $i++) {
+        foreach ($parsing as $i => $row) {
             // Need to define what shop to use for duplicate checking
-            if (isset($parsing[$i]['parsedLabel']['guessedShop'])) {
-                $guessedShop = $parsing[$i]['parsedLabel']['guessedShop'];
+            if (isset($row['parsedLabel']['guessedShop'])) {
+                $guessedShop = $row['parsedLabel']['guessedShop'];
             } else {
                 $guessedShop = $shops[0]->getId();
             }
 
             // When a duplicate is found, we don't display the line again
-            if ($operationRepository->checkDuplicate($parsing[$i]['absoluteAmount'], $guessedShop, $parsing[$i]['date'])) {
+            if ($operationRepository->checkDuplicate($row['absoluteAmount'], $guessedShop, $row['date'])) {
                 unset ($parsing[$i]);
             } else {
                 $operationForm->setName($operationFormDefaultName . '_' . $i);

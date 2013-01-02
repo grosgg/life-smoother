@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gros\ComptaBundle\Entity\ProcessedLine
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gros\ComptaBundle\Entity\ProcessedLineRepository")
  */
 class ProcessedLine
 {

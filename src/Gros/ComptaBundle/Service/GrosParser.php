@@ -14,6 +14,7 @@ class GrosParser
     {
         $this->doctrine = $doctrine;
         $this->shops = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shop')->findAll();
+        $this->processedLineRepository = $this->doctrine->getManager()->getRepository('GrosComptaBundle:ProcessedLine');
 
         // TODO: Here only to make less queries for now
         $this->tomoko = $this->doctrine->getManager()->getRepository('GrosUserBundle:User')->findOneByUsername('tomoko');
@@ -42,4 +43,16 @@ class GrosParser
 
         return $result;
     }
+
+    public function checkProcessedLine($importId, $lineId)
+    {
+        $result = $this->processedLineRepository->findByBoth($importId, $lineId);
+
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
