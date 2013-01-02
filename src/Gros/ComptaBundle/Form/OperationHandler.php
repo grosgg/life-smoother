@@ -35,8 +35,21 @@ class OperationHandler
                 return true;
             } else {
                 $this->logger->debug('Form is invalid.');
-                $this->logger->debug(json_encode($this->form->hasErrors()));
-                $this->logger->debug(json_encode($this->form->isEmpty()));
+
+                if($this->request->isXmlHttpRequest() && $this->form->hasChildren()) {
+                    $errors = array();
+
+                    // Looping through form elements to find errors
+                    foreach($this->form->getChildren() as $formElement) {
+                        if (!$formElement->isValid()) {
+                            foreach ($formElement->getErrors() as $error) {
+                                $errors[$formElement->getName()] = $error->getMessage();
+                            }
+                        }
+                    }
+                    die(json_encode(array('status' => false, 'errors' => $errors, 'form' => $this->request->get('form_id'))));
+                }
+
                 $this->logger->debug($this->form->getErrorsAsString());
             }
         }

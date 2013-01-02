@@ -28,6 +28,7 @@ class Operation
      * @var float $amount
      *
      * @ORM\Column(name="amount", type="decimal", scale=2)
+     * @Assert\NotBlank()
      */
     private $amount;
 
@@ -42,24 +43,28 @@ class Operation
      * @var \Date $date
      *
      * @ORM\Column(name="date", type="date")
+     * @Assert\NotBlank()
      */
     private $date;
 
      /**
      * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $category;
 
      /**
      * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $user;
 
      /**
      * @ORM\ManyToOne(targetEntity="Shop")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $shop;
 

@@ -84,7 +84,7 @@ class OperationController extends Controller
         if ($formHandler->process()) {
             $logger->debug('Operation processed');
             if($request->isXmlHttpRequest()) {
-                die(json_encode(array('status' => 200, 'operation' => $operation->getId(), 'form' => $formId)));
+                die(json_encode(array('status' => true, 'operation' => $operation->getId(), 'form' => $formId)));
             } else {
                 return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
             }

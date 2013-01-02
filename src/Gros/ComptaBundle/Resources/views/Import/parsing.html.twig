@@ -22,7 +22,7 @@ $(document).ready(function() {
             data: $(this).serialize(),
             dataType: "json",
             success: function(msg) {
-                if (msg.status == 200) {
+                if (msg.status == true) {
                     $('form[row="'+msg.form+'"] > input').attr('disabled', 'disabled');
                     $('form[row="'+msg.form+'"] > select').attr('disabled', 'disabled');
                     $('form[row="'+msg.form+'"]').parent().parent().prev().addClass('success');
@@ -30,6 +30,21 @@ $(document).ready(function() {
                     $('form[row="'+msg.form+'"]').parent().delay(3000).fadeOut();
                     count = count -1;
                     $('#count').html(count);
+                } else if (msg.status == false) {
+
+                    for (var key in msg.errors) {
+                        console.log(key + " = " + msg.errors[key]);
+                        $('form[row="'+msg.form+'"]').after('<p class="text-error">'+msg.errors[key]+'</p>');
+                    }
+
+                    $('form[row="'+msg.form+'"] > input').attr('disabled', 'disabled');
+                    $('form[row="'+msg.form+'"] > select').attr('disabled', 'disabled');
+                    $('form[row="'+msg.form+'"]').parent().parent().prev().addClass('error');
+                    $('form[row="'+msg.form+'"] > input[type="submit"]').after(' <i class="icon-exclamation-sign"></i>');
+                    $('form[row="'+msg.form+'"]').parent().delay(3000).fadeOut();
+                    count = count -1;
+                    $('#count').html(count);
+                    
                 }
             }
         });
