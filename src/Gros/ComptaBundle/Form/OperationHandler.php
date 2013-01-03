@@ -91,4 +91,5 @@ class OperationHandler
         $this->em->persist($importedLine);
         $this->em->flush();
     }
+
 }

@@ -47,6 +47,10 @@ class OperationController extends Controller
 
         $entity = $em->getRepository('GrosComptaBundle:Operation')->find($id);
 
+        //TODO: ACL Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkAccess('VIEW', $entity);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Operation entity.');
         }
@@ -68,6 +72,7 @@ class OperationController extends Controller
     public function createAction(Request $request)
     {
         $logger = $this->container->get('gros.logger');
+        $grosSecurityService = $this->container->get('gros_compta.security');
         $operation  = new Operation();
         $operationType = new OperationType();
 
@@ -84,10 +89,12 @@ class OperationController extends Controller
         // Different process depending on form origin
         if($request->isXmlHttpRequest()) {
             if ($formHandler->processAjax()) {
+                $grosSecurityService->insertAce($operation);
                 die(json_encode(array('status' => true, 'operation' => $operation->getId(), 'form' => $formId)));
             }
         } else {
             if ($formHandler->process()) {
+                $grosSecurityService->insertAce($operation);
                 return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
             }
         }

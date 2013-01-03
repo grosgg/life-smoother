@@ -10,6 +10,10 @@ services:
         class: Gros\ComptaBundle\Service\GrosParser
         arguments: [@doctrine]
 
+    gros_compta.security:
+        class: Gros\ComptaBundle\Service\GrosSecurity
+        arguments: [@doctrine, @security.acl.provider, @security.context]
+
     gros.compta.admin.shops:
         class: Gros\ComptaBundle\Admin\ShopAdmin
         arguments: [null, Gros\ComptaBundle\Entity\Shop, 'SonataAdminBundle:CRUD']

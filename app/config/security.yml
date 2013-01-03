@@ -58,6 +58,9 @@ security:
             logout:             true
             anonymous:          false
 
+    acl:
+        connection: default
+
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
