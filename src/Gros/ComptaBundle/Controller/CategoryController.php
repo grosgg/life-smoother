@@ -59,41 +59,28 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to create a new Category entity.
-     *
-     * @Route("/new", name="category_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Category();
-        $form   = $this->createForm(new CategoryType(), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
      * Creates a new Category entity.
      *
      * @Route("/create", name="category_create")
-     * @Method("POST")
-     * @Template("GrosComptaBundle:Category:new.html.twig")
+     * @Template("GrosComptaBundle:Category:create.html.twig")
      */
     public function createAction(Request $request)
     {
         $entity  = new Category();
         $form = $this->createForm(new CategoryType(), $entity);
-        $form->bind($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        if($request->getMethod() == 'POST') {
+            $form->bind($request);
 
-            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+            if ($form->isValid()) {
+                $userGroups = $this->getUser()->getGroups();
+                $entity->setGroup($userGroups[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+            }
         }
 
         return array(

@@ -62,6 +62,12 @@ class Operation
     private $user;
 
      /**
+     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
+     * @ORM\JoinColumn(nullable=true)
+     */
+     private $group;
+
+     /**
      * @ORM\ManyToOne(targetEntity="Shop")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
@@ -228,6 +234,29 @@ class Operation
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set group
+     *
+     * @param Gros\UserBundle\Entity\Group $group
+     * @return Operation
+     */
+    public function setGroup(\Gros\UserBundle\Entity\Group $group)
+    {
+        $this->group = $group;
+    
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return Gros\UserBundle\Entity\Group 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 
 

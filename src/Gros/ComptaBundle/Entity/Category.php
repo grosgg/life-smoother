@@ -3,6 +3,7 @@
 namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gros\ComptaBundle\Entity\Category
@@ -35,12 +36,11 @@ class Category
      */
     private $description;
 
-    /**
-     * @var string $color
-     *
-     * @ORM\Column(name="color", type="string", length=6)
+     /**
+     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $color;
+    private $group;
 
 
     /**
@@ -100,26 +100,25 @@ class Category
     }
 
     /**
-     * Set color
+     * Set group
      *
-     * @param string $color
+     * @param Gros\UserBundle\Entity\Group $group
      * @return Category
      */
-    public function setColor($color)
+    public function setGroup(\Gros\UserBundle\Entity\Group $group)
     {
-        $this->color = $color;
-    
+        $this->group = $group;
         return $this;
     }
 
     /**
-     * Get color
+     * Get group
      *
-     * @return string 
+     * @return Gros\UserBundle\Entity\Group
      */
-    public function getColor()
+    public function getGroup()
     {
-        return $this->color;
+        return $this->group;
     }
 
      /**

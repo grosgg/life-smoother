@@ -70,7 +70,7 @@ class ShopController extends Controller
         $shop  = new Shop;
         $form = $this->createForm(new ShopType, $shop);
 
-        $formHandler = new ShopHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager());
+        $formHandler = new ShopHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->getUser());
 
         if ($formHandler->process()) {
             return $this->redirect($this->generateUrl('shop_show', array('id' => $shop->getId())));

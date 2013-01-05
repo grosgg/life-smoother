@@ -28,7 +28,7 @@ class OperationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GrosComptaBundle:Operation')->findAll();
+        $entities = $em->getRepository('GrosComptaBundle:Operation')->findByGroup($this->getUser()->getId());
 
         return $this->render('GrosComptaBundle:Operation:index.html.twig', array(
             'entities' => $entities,
@@ -47,7 +47,7 @@ class OperationController extends Controller
 
         $entity = $em->getRepository('GrosComptaBundle:Operation')->find($id);
 
-        //TODO: ACL Security check
+        //ACL or DB Security check
         $grosSecurityService = $this->container->get('gros_compta.security');
         $grosSecurityService->checkAccess('VIEW', $entity);
 
@@ -84,7 +84,7 @@ class OperationController extends Controller
 
         $form = $this->createForm($operationType, $operation);
 
-        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $logger);
+        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $this->getUser(), $logger);
 
         // Different process depending on form origin
         if($request->isXmlHttpRequest()) {
@@ -117,6 +117,10 @@ class OperationController extends Controller
 
         $entity = $em->getRepository('GrosComptaBundle:Operation')->find($id);
 
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkAccess('EDIT', $entity);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Operation entity.');
         }
@@ -143,6 +147,10 @@ class OperationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('GrosComptaBundle:Operation')->find($id);
+
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkAccess('EDIT', $entity);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Operation entity.');
@@ -181,6 +189,10 @@ class OperationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('GrosComptaBundle:Operation')->find($id);
 
+            //ACL or DB Security check
+            $grosSecurityService = $this->container->get('gros_compta.security');
+            $grosSecurityService->checkAccess('DELETE', $entity);
+
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Operation entity.');
             }
@@ -198,16 +210,6 @@ class OperationController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
-    }
-    
-    public function menuAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('GrosComptaBundle:Operation')->findAll();
-
-        return $this->render('GrosComptaBundle:Default:menu.html.twig', array(
-            'operations' => $entities,
-        ));
     }
 
 }

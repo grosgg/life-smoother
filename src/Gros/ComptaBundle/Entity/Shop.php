@@ -3,6 +3,7 @@
 namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gros\ComptaBundle\Entity\Shop
@@ -34,6 +35,12 @@ class Shop
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $group;
 
 
     /**
@@ -92,6 +99,28 @@ class Shop
         return $this->description;
     }
     
+    /**
+     * Set group
+     *
+     * @param Gros\UserBundle\Entity\Group $group
+     * @return Category
+     */
+    public function setGroup(\Gros\UserBundle\Entity\Group $group)
+    {
+        $this->group = $group;
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return Gros\UserBundle\Entity\Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
      /**
      * Get display title
      *

@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Gros\ComptaBundle\Security\GroupSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class GrosSecurity
@@ -29,21 +30,40 @@ class GrosSecurity
 
         // retrieving the security identity of the currently logged-in user
         $user = $this->securityContext->getToken()->getUser();
-        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+        $userSecurityIdentity = UserSecurityIdentity::fromAccount($user);
 
         // grant owner access
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $acl->insertObjectAce($userSecurityIdentity, MaskBuilder::MASK_OWNER);
+
         $this->aclProvider->updateAcl($acl);
         
     }
 
     public function checkAccess($permission, $entity)
     {
-        if (false === $this->securityContext->isGranted($permission, $entity))
-        {
-            throw new AccessDeniedException();
-        } else {
-            return true;
+        switch ($permission) {
+            case 'VIEW':
+                // Only checking if user logged in is from the same group as entity
+                $user = $this->securityContext->getToken()->getUser();
+                if ($user->getId() == $entity->getUser()->getId()) {
+                    return true;
+                } else {
+                    throw new AccessDeniedException();
+                }
+                break;
+
+            case 'EDIT':
+            case 'DELETE':
+                if (false === $this->securityContext->isGranted($permission, $entity))
+                {
+                    throw new AccessDeniedException();
+                } else {
+                    return true;
+                }
+
+            default:
+                throw new AccessDeniedException();
+                break;
         }
     }
 

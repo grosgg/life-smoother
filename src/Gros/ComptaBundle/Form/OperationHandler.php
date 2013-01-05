@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Gros\ComptaBundle\Entity\Operation;
 use Gros\ComptaBundle\Entity\ProcessedLine;
+use Gros\UserBundle\Entity\User;
 use Symfony\Bridge\Monolog\Logger;
 
 class OperationHandler
@@ -14,12 +15,15 @@ class OperationHandler
     protected $form;
     protected $request;
     protected $em;
+    protected $user;
+    protected $logger;
 
-    public function __construct(Form $form, Request $request, EntityManager $em, Logger $logger)
+    public function __construct(Form $form, Request $request, EntityManager $em, User $user, Logger $logger)
     {
         $this->form    = $form;
         $this->request = $request;
         $this->em      = $em;
+        $this->user    = $user;
         $this->logger  = $logger;
     }
 
@@ -78,6 +82,10 @@ class OperationHandler
 
     public function onSuccess(Operation $operation)
     {
+        // Automatically setting operation's group
+        $userGroups = $this->user->getGroups();
+        $operation->setGroup($userGroups[0]);
+
         $this->em->persist($operation);
         $this->em->flush();
     }
