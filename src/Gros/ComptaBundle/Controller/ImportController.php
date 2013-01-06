@@ -60,6 +60,7 @@ class ImportController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $operationRepository = $em->getRepository('GrosComptaBundle:Operation');
+        $group = $this->getUser()->getGroup()->getId();
 
         $import = $em->getRepository('GrosComptaBundle:Import')->find($request->get('id'));
         if (!$import) {
@@ -70,9 +71,9 @@ class ImportController extends Controller
         $grosSecurityService = $this->container->get('gros_compta.security');
         $grosSecurityService->checkGroupAccess($import);
 
-        $shops = $em->getRepository('GrosComptaBundle:Shop')->findAll();
-        $categories = $em->getRepository('GrosComptaBundle:Category')->findAll();
-        $users = $em->getRepository('GrosUserBundle:User')->findAll();
+        $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
+        $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($group);
+        $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($group);
 
         $grosParserService = $this->container->get('gros_compta.parser');
         $parsing = $import->parseLaBanquePostale($grosParserService);
@@ -91,7 +92,7 @@ class ImportController extends Controller
             }
 
             // When a duplicate is found, we don't display the line again
-            if ($operationRepository->checkDuplicate($row['absoluteAmount'], $guessedShop, $row['date'])) {
+            if ($operationRepository->checkDuplicate($row['absoluteAmount'], $guessedShop, $row['date'], $group)) {
                 unset ($parsing[$i]);
             } else {
                 $operationForm->setName($operationFormDefaultName . '_' . $i);
@@ -106,7 +107,7 @@ class ImportController extends Controller
             'forms'        => $forms,
             'shops'        => $shops,
             'categories'   => $categories,
-            'users'        => $users,
+            'shoppers'     => $shoppers,
             'importId'     => $import->getId(),
         ));
     }

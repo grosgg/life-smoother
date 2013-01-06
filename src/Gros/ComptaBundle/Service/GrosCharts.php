@@ -9,11 +9,14 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 class GrosCharts
 {
     protected $doctrine;
+    protected $user;
+    protected $group;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $doctrine, $securityContext)
     {
         $this->doctrine = $doctrine;
-
+        $this->user = $securityContext->getToken()->getUser();
+        $this->group = $this->user->getGroup()->getId();
     }
 
     public function getChartExpensesIncomes($targetDiv, $startDate, $endDate, $chartShape='ColumnChart')
@@ -35,7 +38,7 @@ class GrosCharts
         
         $data = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByType($startDate, $endDate);
+            ->sumByType($startDate, $endDate, $this->group);
 
         $rows = array();
         $expenses = !empty($data[0]) ? $data[0]['sumamount'] : 0;
@@ -68,7 +71,7 @@ class GrosCharts
         
         $data = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByCategory($startDate, $endDate);
+            ->sumByCategory($startDate, $endDate, $this->group);
 
         $rows = array();
 
@@ -102,7 +105,7 @@ class GrosCharts
         
         $data = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByShop($startDate, $endDate);
+            ->sumByShop($startDate, $endDate, $this->group);
 
         $rows = array();
 
@@ -136,7 +139,7 @@ class GrosCharts
         
         $data = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByShopper($startDate, $endDate);
+            ->sumByShopper($startDate, $endDate, $this->group);
 
         $rows = array();
 
@@ -198,7 +201,7 @@ class GrosCharts
         // Getting initial lines for average calculation
         $initialData = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByType($startDate, $endDate);
+            ->sumByType($startDate, $endDate, $this->group);
 
         // Calculating the averages based on past months operations
         $estimationBase = array(0 => 0, 1 => 0);

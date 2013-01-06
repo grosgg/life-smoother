@@ -12,12 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class OperationRepository extends EntityRepository
 {
-    public function sumByType($startDate, $endDate)
+    public function sumByType($startDate, $endDate, $group)
     {
         $qb = $this->_em->createQueryBuilder();
 
         $qb->select('o.type', 'SUM(o.amount) as sumamount')
-            ->from('GrosComptaBundle:Operation', 'o');
+            ->from('GrosComptaBundle:Operation', 'o')
+            ->where('o.group = :group')
+                ->setParameter('group', $group);
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
 
@@ -27,7 +29,7 @@ class OperationRepository extends EntityRepository
             ->getResult();
     }
 
-    public function sumByCategory($startDate, $endDate)
+    public function sumByCategory($startDate, $endDate, $group)
     {
         $qb = $this->_em->createQueryBuilder();
 
@@ -35,7 +37,9 @@ class OperationRepository extends EntityRepository
             ->from('GrosComptaBundle:Operation', 'o')
             ->leftJoin('o.category', 'c')
             ->where('o.type = :type')
-                ->setParameter('type', 0);
+                ->setParameter('type', 0)
+            ->andWhere('o.group = :group')
+                ->setParameter('group', $group);
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
 
@@ -45,7 +49,7 @@ class OperationRepository extends EntityRepository
             ->getResult();
     }
 
-    public function sumByShop($startDate, $endDate)
+    public function sumByShop($startDate, $endDate, $group)
     {
         $qb = $this->_em->createQueryBuilder();
 
@@ -53,7 +57,9 @@ class OperationRepository extends EntityRepository
             ->from('GrosComptaBundle:Operation', 'o')
             ->leftJoin('o.shop', 's')
             ->where('o.type = :type')
-                ->setParameter('type', 0);
+                ->setParameter('type', 0)
+            ->andWhere('o.group = :group')
+                ->setParameter('group', $group);
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
 
@@ -63,7 +69,7 @@ class OperationRepository extends EntityRepository
             ->getResult();
     }
 
-    public function sumByShopper($startDate, $endDate)
+    public function sumByShopper($startDate, $endDate, $group)
     {
         $qb = $this->_em->createQueryBuilder();
 
@@ -71,7 +77,9 @@ class OperationRepository extends EntityRepository
             ->from('GrosComptaBundle:Operation', 'o')
             ->leftJoin('o.shopper', 's')
             ->where('o.type = :type')
-                ->setParameter('type', 0);
+                ->setParameter('type', 0)
+            ->andWhere('o.group = :group')
+                ->setParameter('group', $group);
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
 
@@ -90,7 +98,7 @@ class OperationRepository extends EntityRepository
         return $qb;
     }
 
-    public function checkDuplicate($amount, $shop, $date)
+    public function checkDuplicate($amount, $shop, $date, $group)
     {
         $qb = $this->_em->createQueryBuilder();
 
@@ -101,7 +109,9 @@ class OperationRepository extends EntityRepository
             ->andWhere('o.shop = :shop')
                 ->setParameter('shop', $shop)
             ->andWhere('o.date = :date')
-                ->setParameter('date', $date);
+                ->setParameter('date', $date)
+            ->andWhere('o.group = :group')
+                ->setParameter('group', $group);
 
         $result = $qb->getQuery()->getResult();
         return !empty($result);

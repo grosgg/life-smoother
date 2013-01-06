@@ -10,10 +10,12 @@ class GrosParser
 {
     protected $doctrine;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $doctrine, $securityContext)
     {
         $this->doctrine = $doctrine;
-        $this->shops = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shop')->findAll();
+
+        $group = $securityContext->getToken()->getUser()->getGroup()->getId();
+        $this->shops = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
         $this->processedLineRepository = $this->doctrine->getManager()->getRepository('GrosComptaBundle:ProcessedLine');
 
         // TODO: Here only to make less queries for now

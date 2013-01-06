@@ -8,7 +8,6 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Gros\ComptaBundle\Security\GroupSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class GrosSecurity

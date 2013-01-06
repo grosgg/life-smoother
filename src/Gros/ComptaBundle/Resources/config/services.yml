@@ -4,11 +4,11 @@ parameters:
 services:
     gros_compta.charts:
         class: Gros\ComptaBundle\Service\GrosCharts
-        arguments: [@doctrine]
+        arguments: [@doctrine, @security.context]
 
     gros_compta.parser:
         class: Gros\ComptaBundle\Service\GrosParser
-        arguments: [@doctrine]
+        arguments: [@doctrine, @security.context]
 
     gros_compta.security:
         class: Gros\ComptaBundle\Service\GrosSecurity

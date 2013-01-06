@@ -99,9 +99,9 @@ $(document).ready(function() {
                                     <option value={{ category.id }}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="{{ forms[key].user.vars.full_name}}" class="input input-small">
-                                    {% for user in users %}
-                                    <option value={{ user.id }} {% if row.parsedLabel.guessedUser is defined and row.parsedLabel.guessedUser == user.id %}selected=selected{% endif %}>{{ user.username }}</option>
+                                <select name="{{ forms[key].shopper.vars.full_name}}" class="input input-small">
+                                    {% for shopper in shoppers %}
+                                    <option value={{ shopper.id }} {% if row.parsedLabel.guessedShopper is defined and row.parsedLabel.guessedShopper == shopper.id %}selected=selected{% endif %}>{{ shopper.name }}</option>
                                     {% endfor %}
                                 </select>
                                 <input name="{{ forms[key].description.vars.full_name}}" class="input input-large" type="text" placeholder="Description"/>
