@@ -13,7 +13,6 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Amount</th>
             <th>Date</th>
             <th>Shop</th>
@@ -24,14 +23,15 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('operation_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{% if entity.type == 0 %}-{% else %}+{% endif %}{{ entity.amount }}€</td>
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
             <td>{{ entity.shop.name }}</td>
             <td>{{ entity.description }}</td>
             <td>
                 <a class="btn" href="{{ path('operation_show', { 'id': entity.id }) }}">show</a>
+                {% if entity.canEdit %}
                 <a class="btn btn-warning" href="{{ path('operation_edit', { 'id': entity.id }) }}">edit</a>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

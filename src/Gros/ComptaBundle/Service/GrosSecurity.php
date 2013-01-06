@@ -39,32 +39,28 @@ class GrosSecurity
         
     }
 
-    public function checkAccess($permission, $entity)
+    public function checkUserAccess($permission, $entity, $throwException = true)
     {
-        switch ($permission) {
-            case 'VIEW':
-                // Only checking if user logged in is from the same group as entity
-                $user = $this->securityContext->getToken()->getUser();
-                if ($user->getId() == $entity->getUser()->getId()) {
-                    return true;
-                } else {
-                    throw new AccessDeniedException();
-                }
-                break;
-
-            case 'EDIT':
-            case 'DELETE':
-                if (false === $this->securityContext->isGranted($permission, $entity))
-                {
-                    throw new AccessDeniedException();
-                } else {
-                    return true;
-                }
-
-            default:
-                throw new AccessDeniedException();
-                break;
+        if (true === $this->securityContext->isGranted($permission, $entity)) {
+            return true;
+        } else if ($throwException == false) {
+            return false;
+        } else {
+            throw new AccessDeniedException();
         }
     }
 
+    public function checkGroupAccess($entity, $throwException = true)
+    {
+        // Only checking if user logged in is from the same group as entity
+        $user = $this->securityContext->getToken()->getUser();
+        $userGroups = $user->getGroups();
+        if ($userGroups[0] == $entity->getGroup()) {
+            return true;
+        } else if ($throwException == false) {
+            return false;
+        } else {
+            throw new AccessDeniedException();
+        }
+    }
 }

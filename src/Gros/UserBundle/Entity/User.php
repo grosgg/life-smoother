@@ -38,4 +38,14 @@ class User extends BaseUser
         return $this->id;
     }
 
+    /**
+     * Get group
+     *
+     * @return Gros\UserBundle\Entity\Group
+     */
+    public function getGroup()
+    {
+        // Even if the table relation is ManyToMany, one user should only be part of one group
+        return $this->groups[0];
+    }
 }

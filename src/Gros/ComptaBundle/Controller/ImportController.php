@@ -33,7 +33,7 @@ class ImportController extends Controller
                  ->add('file', 'file', array('label' => 'Your CSV bank file:'))
                  ->getForm();
 
-        $formHandler = new ImportHandler($form, $request, $this->getDoctrine()->getEntityManager());
+        $formHandler = new ImportHandler($form, $request, $this->getDoctrine()->getEntityManager(), $this->getUser());
 
         if ($formHandler->process()) {
             return $this->redirect($this->generateUrl('import_parsing', array('id' => $import->getId())));
@@ -41,7 +41,8 @@ class ImportController extends Controller
 
         // Pending imports list
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('GrosComptaBundle:Import')->findAll();
+        $userGroups = $this->getUser()->getGroups();
+        $entities = $em->getRepository('GrosComptaBundle:Import')->findByGroup($userGroups[0]);
 
         return $this->render('GrosComptaBundle:Import:index.html.twig', array(
             'form' => $form->createView(),
@@ -61,6 +62,14 @@ class ImportController extends Controller
         $operationRepository = $em->getRepository('GrosComptaBundle:Operation');
 
         $import = $em->getRepository('GrosComptaBundle:Import')->find($request->get('id'));
+        if (!$import) {
+            throw $this->createNotFoundException('Unable to find Import entity.');
+        }
+
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkGroupAccess($import);
+
         $shops = $em->getRepository('GrosComptaBundle:Shop')->findAll();
         $categories = $em->getRepository('GrosComptaBundle:Category')->findAll();
         $users = $em->getRepository('GrosUserBundle:User')->findAll();

@@ -28,7 +28,8 @@ class ShopController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GrosComptaBundle:Shop')->findAll();
+        $userGroups = $this->getUser()->getGroups();
+        $entities = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($userGroups[0]);
 
         return array(
             'entities' => $entities,
@@ -50,6 +51,10 @@ class ShopController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Shop entity.');
         }
+
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkGroupAccess($entity);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -97,6 +102,10 @@ class ShopController extends Controller
             throw $this->createNotFoundException('Unable to find Shop entity.');
         }
 
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkUserAccess('EDIT', $entity);
+
         $editForm = $this->createForm(new ShopType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -123,6 +132,10 @@ class ShopController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Shop entity.');
         }
+
+        //ACL or DB Security check
+        $grosSecurityService = $this->container->get('gros_compta.security');
+        $grosSecurityService->checkUserAccess('EDIT', $entity);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ShopType(), $entity);
@@ -160,6 +173,10 @@ class ShopController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Shop entity.');
             }
+
+            //ACL or DB Security check
+            $grosSecurityService = $this->container->get('gros_compta.security');
+            $grosSecurityService->checkUserAccess('DELETE', $entity);
 
             $em->remove($entity);
             $em->flush();

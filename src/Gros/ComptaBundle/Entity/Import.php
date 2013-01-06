@@ -45,6 +45,12 @@ class Import
      */
     private $path;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $group;
+
     /**
      * @Assert\File(maxSize="50000")
      */
@@ -99,7 +105,6 @@ class Import
     public function setDate($date)
     {
         $this->date = $date;
-    
         return $this;
     }
 
@@ -111,6 +116,28 @@ class Import
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set group
+     *
+     * @param Gros\UserBundle\Entity\Group $group
+     * @return Category
+     */
+    public function setGroup(\Gros\UserBundle\Entity\Group $group)
+    {
+        $this->group = $group;
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return Gros\UserBundle\Entity\Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 
     // file methods
