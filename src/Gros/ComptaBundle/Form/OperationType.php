@@ -28,9 +28,9 @@ class OperationType extends AbstractType
             ->add('shop', 'entity',array(
                 'class'    => 'GrosComptaBundle:Shop',
                 'property' => 'name'))
-            ->add('user', 'entity',array(
-                'class'    => 'GrosUserBundle:User',
-                'property' => 'username'))
+            ->add('shopper', 'entity',array(
+                'class'    => 'GrosComptaBundle:Shopper',
+                'property' => 'name'))
         ;
     }
 

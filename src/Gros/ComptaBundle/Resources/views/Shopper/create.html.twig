@@ -1,0 +1,24 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    New Shopper - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    New Shopper
+{% endblock %}
+
+{% form_theme form with 'GrosComptaBundle:Default:fields.html.twig' %}
+
+{% block groscompta_body %}
+
+<form class="form-horizontal" action="{{ path('shopper_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <p>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn" href="{{ path('shopper') }}">Back to the list</a>
+    </p>
+</form>
+
+{% endblock %}

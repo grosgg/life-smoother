@@ -16,11 +16,6 @@ class GrosCharts
 
     }
 
-    public function getChart()
-    {
-        return 'Je mange du caca.';
-    }
-
     public function getChartExpensesIncomes($targetDiv, $startDate, $endDate, $chartShape='ColumnChart')
     {
         $columns = array();
@@ -141,12 +136,12 @@ class GrosCharts
         
         $data = $this->doctrine->getEntityManager()
             ->getRepository('GrosComptaBundle:Operation')
-            ->sumByUser($startDate, $endDate);
+            ->sumByShopper($startDate, $endDate);
 
         $rows = array();
 
         foreach($data as $dataLine){
-            $rows[] = array($dataLine['username'], $dataLine['sumamount']);
+            $rows[] = array($dataLine['name'], $dataLine['sumamount']);
         }
 
         $title = 'Expenses by User';
@@ -206,7 +201,7 @@ class GrosCharts
             ->sumByType($startDate, $endDate);
 
         // Calculating the averages based on past months operations
-        $estimationBase = array();
+        $estimationBase = array(0 => 0, 1 => 0);
         foreach ($initialData as $row) {
             $estimationBase[$row['type']] = $row['sumamount'] / $monthsBase;
         }

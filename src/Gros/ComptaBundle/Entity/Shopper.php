@@ -3,18 +3,17 @@
 namespace Gros\ComptaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Gros\ComptaBundle\Entity\Shop
+ * Shopper
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Gros\ComptaBundle\Entity\ShopRepository")
+ * @ORM\Entity
  */
-class Shop
+class Shopper
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,14 +22,14 @@ class Shop
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
 
     /**
-     * @var string $description
+     * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
      */
@@ -57,7 +56,7 @@ class Shop
      * Set name
      *
      * @param string $name
-     * @return Shop
+     * @return Shopper
      */
     public function setName($name)
     {
@@ -80,7 +79,7 @@ class Shop
      * Set description
      *
      * @param string $description
-     * @return Shop
+     * @return Shopper
      */
     public function setDescription($description)
     {
@@ -98,7 +97,7 @@ class Shop
     {
         return $this->description;
     }
-    
+
     /**
      * Set group
      *
@@ -122,7 +121,7 @@ class Shop
     }
 
     /**
-     * Get display title
+     * Get display name
      *
      * @return string 
      */

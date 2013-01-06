@@ -63,19 +63,19 @@ class OperationRepository extends EntityRepository
             ->getResult();
     }
 
-    public function sumByUser($startDate, $endDate)
+    public function sumByShopper($startDate, $endDate)
     {
         $qb = $this->_em->createQueryBuilder();
 
-        $qb->select('u.username', 'SUM(o.amount) as sumamount')
+        $qb->select('s.name', 'SUM(o.amount) as sumamount')
             ->from('GrosComptaBundle:Operation', 'o')
-            ->leftJoin('o.user', 'u')
+            ->leftJoin('o.shopper', 's')
             ->where('o.type = :type')
                 ->setParameter('type', 0);
 
         $qb = $this->setPeriod($qb, $startDate, $endDate);
 
-        $qb->groupBy('o.user');
+        $qb->groupBy('o.shopper');
 
         return $qb->getQuery()
             ->getResult();

@@ -1,0 +1,41 @@
+
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Shoppers - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Shoppers
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('shopper_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.description }}</td>
+            <td>
+                <a class="btn btn-warning" href="{{ path('shopper_edit', { 'id': entity.id }) }}">edit</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="{{ path('shopper_create') }}">
+    Create a new entry
+</a>
+
+{% endblock %}

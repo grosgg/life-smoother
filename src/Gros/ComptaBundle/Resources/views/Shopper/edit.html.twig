@@ -1,0 +1,38 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Edit Shopper - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Edit Shopper
+{% endblock %}
+
+{% form_theme edit_form with 'GrosComptaBundle:Default:fields.html.twig' %}
+
+{% block groscompta_body %}
+
+<form id='edit_form' action="{{ path('shopper_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+</form>
+
+<ul class="unstyled">
+    <li style="float:left; margin-right:10px">
+        <a class="btn" href="{{ path('shopper') }}">
+            Back to the list
+        </a>
+    </li>
+    <li style="float:left; margin-right:10px">
+        <a class="btn btn-primary" onclick="$('#edit_form').submit()">
+            Save
+        </a>
+    </li>
+    <li style="float:left">
+        <form action="{{ path('shopper_delete', { 'id': entity.id }) }}" method="post" >
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

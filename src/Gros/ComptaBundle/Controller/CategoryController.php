@@ -112,7 +112,7 @@ class CategoryController extends Controller
 
         //ACL or DB Security check
         $grosSecurityService = $this->container->get('gros_compta.security');
-        $grosSecurityService->checkUserAccess('EDIT', $entity);
+        $grosSecurityService->checkGroupAccess($entity);
 
         $editForm = $this->createForm(new CategoryType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -143,7 +143,7 @@ class CategoryController extends Controller
 
         //ACL or DB Security check
         $grosSecurityService = $this->container->get('gros_compta.security');
-        $grosSecurityService->checkUserAccess('EDIT', $entity);
+        $grosSecurityService->checkGroupAccess($entity);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new CategoryType(), $entity);
@@ -184,7 +184,7 @@ class CategoryController extends Controller
 
             //ACL or DB Security check
             $grosSecurityService = $this->container->get('gros_compta.security');
-            $grosSecurityService->checkUserAccess('DELETE', $entity);
+            $grosSecurityService->checkGroupAccess($entity);
 
             $em->remove($entity);
             $em->flush();

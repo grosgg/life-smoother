@@ -55,11 +55,11 @@ class Operation
     private $category;
 
      /**
-     * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Shopper")
+     * @ORM\JoinColumn(nullable=true)
      * @Assert\NotBlank()
      */
-    private $user;
+    private $shopper;
 
      /**
      * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
@@ -214,26 +214,25 @@ class Operation
     }
 
     /**
-     * Set user
+     * Set shopper
      *
-     * @param Gros\UserBundle\Entity\User $user
+     * @param Gros\ComptaBundle\Entity\Shopper $shopper
      * @return Operation
      */
-    public function setUser(\Gros\UserBundle\Entity\User $user)
+    public function setShopper(Shopper $shopper)
     {
-        $this->user = $user;
-    
+        $this->shopper = $shopper;
         return $this;
     }
 
     /**
-     * Get user
+     * Get shopper
      *
-     * @return Gros\UserBundle\Entity\User 
+     * @return Gros\ComptaBundle\Entity\Shopper
      */
-    public function getUser()
+    public function getShopper()
     {
-        return $this->user;
+        return $this->shopper;
     }
 
     /**
