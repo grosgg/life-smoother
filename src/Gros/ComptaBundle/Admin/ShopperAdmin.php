@@ -10,9 +10,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-use Gros\ComptaBundle\Entity\Category;
+use Gros\ComptaBundle\Entity\Shopper;
 
-class CategoryAdmin extends Admin
+class ShopperAdmin extends Admin
 {
     /**
      * Create and Edit

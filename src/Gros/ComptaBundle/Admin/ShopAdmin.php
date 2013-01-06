@@ -25,6 +25,7 @@ class ShopAdmin extends Admin
         $formMapper
                 ->add('name')
                 ->add('description')
+                ->add('group')
             ->setHelps(array(
             ))
         ;
@@ -42,6 +43,7 @@ class ShopAdmin extends Admin
             ->add('id')
             ->addIdentifier('name')
             ->add('description')
+            ->add('group')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),

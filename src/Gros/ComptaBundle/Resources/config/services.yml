@@ -26,6 +26,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Categories }
 
+    gros.compta.admin.shoppers:
+        class: Gros\ComptaBundle\Admin\ShopperAdmin
+        arguments: [null, Gros\ComptaBundle\Entity\Shopper, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Shopper }
+
     gros.logger:
         class: Symfony\Bridge\Monolog\Logger
         arguments: [gros]
