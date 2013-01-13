@@ -10,6 +10,7 @@ class GrosParser
 {
     protected $doctrine;
     protected $shops;
+    protected $categories;
     protected $defaults;
     protected $processedLineRepository;
 
@@ -19,6 +20,7 @@ class GrosParser
 
         $group = $securityContext->getToken()->getUser()->getGroup()->getId();
         $this->shops = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
+        $this->categories = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Category')->findByGroup($group);
         $this->defaults = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Defaults')->findOneByGroup($group);
         $this->processedLineRepository = $this->doctrine->getManager()->getRepository('GrosComptaBundle:ProcessedLine');
 
@@ -39,6 +41,7 @@ class GrosParser
         foreach ($this->shops as $shop) {
             if (strpos(strtolower($data), strtolower($shop->getName()))) {
                 $result['guessedShop'] = $shop->getId();
+                $result['guessedCategory'] = $shop->getDefaultCategory()->getId();
             }
         }
 
@@ -57,7 +60,7 @@ class GrosParser
                 $result['guessedShop'] = $this->defaults->getShop()->getId();
             }
             if (!$result['guessedCategory']) {
-                $result['guessedCategory'] = $this->defaults->getCategory()->getId();
+                $result['guessedCategory'] = $this->defaults->getShop()->getDefaultCategory()->getId();
             }
             if (!$result['guessedShopper']) {
                 $result['guessedShopper'] = $this->defaults->getShopper()->getId();
