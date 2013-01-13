@@ -74,6 +74,7 @@ class ImportController extends Controller
         $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
         $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($group);
         $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($group);
+        $defaults = $em->getRepository('GrosComptaBundle:Defaults')->findByGroup($group);
 
         $grosParserService = $this->container->get('gros_compta.parser');
         $parsing = $import->parseLaBanquePostale($grosParserService);
@@ -108,6 +109,7 @@ class ImportController extends Controller
             'shops'        => $shops,
             'categories'   => $categories,
             'shoppers'     => $shoppers,
+            'defaults'     => $defaults,
             'importId'     => $import->getId(),
         ));
     }

@@ -60,6 +60,7 @@ $(document).ready(function() {
 {{ parent() }}
 <style>
     form { margin-bottom: 10px; }
+    select.input-shopper { width: 140px; }
 </style>
 {% endblock %}
 
@@ -96,10 +97,10 @@ $(document).ready(function() {
                                 </select>
                                 <select name="{{ forms[key].category.vars.full_name}}" class="input input-small">
                                     {% for category in categories %}
-                                    <option value={{ category.id }}>{{ category.name }}</option>
+                                    <option value={{ category.id }} {% if row.parsedLabel.guessedCategory is defined and row.parsedLabel.guessedCategory == category.id %}selected=selected{% endif %}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
-                                <select name="{{ forms[key].shopper.vars.full_name}}" class="input input-small">
+                                <select name="{{ forms[key].shopper.vars.full_name}}" class="input input-shopper">
                                     {% for shopper in shoppers %}
                                     <option value={{ shopper.id }} {% if row.parsedLabel.guessedShopper is defined and row.parsedLabel.guessedShopper == shopper.id %}selected=selected{% endif %}>{{ shopper.name }}</option>
                                     {% endfor %}

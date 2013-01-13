@@ -1,0 +1,30 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Default Settings - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Default Settings
+{% endblock %}
+
+{% form_theme edit_form with 'GrosComptaBundle:Settings:fields.html.twig' %}
+
+{% block groscompta_body %}
+<div class="well well-small">
+    These settings will be selected by default in the Data Import if no rule matches the operation label.
+</div>
+
+<form id='edit_form' action="{{ path('settings_defaults') }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+</form>
+
+<ul class="unstyled">
+    <li style="float:left; margin-right:10px">
+        <a class="btn btn-primary" onclick="$('#edit_form').submit()">
+            Save
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

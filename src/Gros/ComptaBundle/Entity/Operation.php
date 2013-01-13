@@ -107,7 +107,6 @@ class Operation
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    
         return $this;
     }
 
@@ -153,7 +152,6 @@ class Operation
     public function setDescription($description)
     {
         $this->description = $description;
-    
         return $this;
     }
 
@@ -176,7 +174,6 @@ class Operation
     public function setCategory(Category $category)
     {
         $this->category = $category;
-    
         return $this;
     }
 
@@ -199,7 +196,6 @@ class Operation
     public function setShop(Shop $shop)
     {
         $this->shop = $shop;
-    
         return $this;
     }
 
@@ -244,7 +240,6 @@ class Operation
     public function setGroup(\Gros\UserBundle\Entity\Group $group)
     {
         $this->group = $group;
-    
         return $this;
     }
 
@@ -268,7 +263,6 @@ class Operation
     public function setType($type)
     {
         $this->type = $type;
-    
         return $this;
     }
 

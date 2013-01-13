@@ -37,6 +37,13 @@ class Shop
     private $description;
 
      /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $default_category;
+
+     /**
      * @ORM\ManyToOne(targetEntity="Gros\UserBundle\Entity\Group")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -99,6 +106,28 @@ class Shop
         return $this->description;
     }
     
+    /**
+     * Set default category
+     *
+     * @param Gros\ComptaBundle\Entity\Category $category
+     * @return Shop
+     */
+    public function setDefaultCategory(Category $category)
+    {
+        $this->default_category = $category;
+        return $this;
+    }
+
+    /**
+     * Get default category
+     *
+     * @return Gros\ComptaBundle\Entity\Category 
+     */
+    public function getDefaultCategory()
+    {
+        return $this->default_category;
+    }
+
     /**
      * Set group
      *
