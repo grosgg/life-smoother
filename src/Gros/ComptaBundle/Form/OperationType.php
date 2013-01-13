@@ -6,13 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class OperationType extends AbstractType
 {
     private $name = 'gros_comptabundle_operationtype';
+    private $group;
+
+    public function __construct($user)
+    {
+        $this->group = $user->getGroup()->getId();
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $groupId = $this->group;
         $builder
             ->add('amount')
             ->add('type', 'choice', array(
@@ -24,13 +32,28 @@ class OperationType extends AbstractType
             ->add('description')
             ->add('category', 'entity',array(
                 'class'    => 'GrosComptaBundle:Category',
-                'property' => 'name'))
+                'query_builder' => function(EntityRepository $er) use ($groupId) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.group = :groupId')
+                        ->setParameter('groupId', $groupId);
+                }
+            ))
             ->add('shop', 'entity',array(
                 'class'    => 'GrosComptaBundle:Shop',
-                'property' => 'name'))
+                'query_builder' => function(EntityRepository $er) use ($groupId) {
+                    return $er->createQueryBuilder('s')
+                        ->where('s.group = :groupId')
+                        ->setParameter('groupId', $groupId);
+                }
+            ))
             ->add('shopper', 'entity',array(
                 'class'    => 'GrosComptaBundle:Shopper',
-                'property' => 'name'))
+                'query_builder' => function(EntityRepository $er) use ($groupId) {
+                    return $er->createQueryBuilder('s')
+                        ->where('s.group = :groupId')
+                        ->setParameter('groupId', $groupId);
+                }
+            ))
         ;
     }
 

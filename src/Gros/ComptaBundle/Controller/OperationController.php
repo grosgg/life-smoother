@@ -85,7 +85,7 @@ class OperationController extends Controller
         $logger = $this->container->get('gros.logger');
         $grosSecurityService = $this->container->get('gros_compta.security');
         $operation  = new Operation();
-        $operationType = new OperationType();
+        $operationType = new OperationType($this->getUser());
 
         $formId = $request->get('form_id');
         if ($formId != null) {
@@ -136,7 +136,7 @@ class OperationController extends Controller
         $grosSecurityService = $this->container->get('gros_compta.security');
         $grosSecurityService->checkUserAccess('EDIT', $entity);
 
-        $editForm = $this->createForm(new OperationType(), $entity);
+        $editForm = $this->createForm(new OperationType($this->getUser()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -168,7 +168,7 @@ class OperationController extends Controller
         $grosSecurityService->checkUserAccess('EDIT', $entity);
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new OperationType(), $entity);
+        $editForm = $this->createForm(new OperationType($this->getUser()), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

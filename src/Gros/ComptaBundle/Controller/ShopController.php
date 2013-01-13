@@ -73,7 +73,7 @@ class ShopController extends Controller
     public function createAction(Request $request)
     {
         $shop  = new Shop;
-        $form = $this->createForm(new ShopType, $shop);
+        $form = $this->createForm(new ShopType($this->getUser()), $shop);
 
         $formHandler = new ShopHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->getUser());
 
@@ -106,7 +106,7 @@ class ShopController extends Controller
         $grosSecurityService = $this->container->get('gros_compta.security');
         $grosSecurityService->checkGroupAccess($entity);
 
-        $editForm = $this->createForm(new ShopType(), $entity);
+        $editForm = $this->createForm(new ShopType($this->getUser()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -138,7 +138,7 @@ class ShopController extends Controller
         $grosSecurityService->checkGroupAccess($entity);
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ShopType(), $entity);
+        $editForm = $this->createForm(new ShopType($this->getUser()), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
