@@ -16,9 +16,10 @@ app/config/parameters.yml
 vendor/*
 web/uploads/*
 web/bundles/*
-web/css/*
-web/images/*
-web/js/*
+# web/css/*
+# web/img/*
+# web/images/*
+# web/js/*
 *.php~
 web/media/cache/*
 composer.phar
