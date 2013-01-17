@@ -21,18 +21,25 @@ class ShopController extends Controller
     /**
      * Lists all Shop entities.
      *
-     * @Route("/", name="shop")
+     * @Route("/", name="shop", defaults={"page" = 1})
+     * @Route("/page/{page}", name="shop_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
+        $userGroup = $this->getUser()->getGroup();
+        $limit = $this->container->getParameter('pagination_limit');
 
-        $userGroups = $this->getUser()->getGroups();
-        $entities = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($userGroups[0]);
+        $countTotal = count($em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup)));
+        $pagesTotal = ceil($countTotal / $limit);
+
+        $entities = $em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup), array(), $limit, $limit * ($page -1));
 
         return array(
             'entities' => $entities,
+            'pageCurrent' => $page,
+            'pagesTotal' => $pagesTotal,
         );
     }
 

@@ -10,5 +10,6 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: 
+    secret: mongrossecret
     database_path: null
+    pagination_limit: 20
