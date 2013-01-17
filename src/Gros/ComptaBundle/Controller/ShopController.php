@@ -33,13 +33,17 @@ class ShopController extends Controller
 
         $countTotal = count($em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup)));
         $pagesTotal = ceil($countTotal / $limit);
+        $paginator = array(
+            'pageCurrent' => $page,
+            'pagesTotal' => $pagesTotal,
+            'routeName' => 'shop_page',
+        );
 
         $entities = $em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup), array(), $limit, $limit * ($page -1));
 
         return array(
             'entities' => $entities,
-            'pageCurrent' => $page,
-            'pagesTotal' => $pagesTotal,
+            'paginator' => $paginator,
         );
     }
 
