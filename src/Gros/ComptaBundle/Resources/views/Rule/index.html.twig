@@ -1,0 +1,43 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Rules - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Rules
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Priority</th>
+            <th>Expression</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.priority }}</td>
+            <td>{{ entity.regex }}</td>
+            <td>{{ entity.description }}</td>
+            <td>
+                <a class="btn" href="{{ path('rule_show', { 'id': entity.id }) }}">show</a>
+                {% if entity.canEdit %}
+                <a class="btn btn-warning" href="{{ path('rule_edit', { 'id': entity.id }) }}">edit</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="{{ path('rule_create') }}">
+    Create a new entry
+</a>
+
+{% endblock %}

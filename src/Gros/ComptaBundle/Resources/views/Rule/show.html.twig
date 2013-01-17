@@ -1,0 +1,66 @@
+
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    Rule {{ entity.id }} - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    Rule {{ entity.id }}
+{% endblock %}
+
+{% block groscompta_body %}
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Expression</th>
+            <td>{{ entity.regex }}</td>
+        </tr>
+        <tr>
+            <th>Priority</th>
+            <td>{{ entity.priority }}</td>
+        </tr>
+        <tr>
+            <th>Shop</th>
+            <td>{{ entity.shop.name }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ entity.category.name }}</td>
+        </tr>
+        <tr>
+            <th>Shopper</th>
+            <td>{{ entity.shopper }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="unstyled">
+    <li style="float:left; margin-right:10px">
+        <a class="btn" href="{{ path('rule') }}">
+            Back to the list
+        </a>
+    </li>
+    <li style="float:left; margin-right:10px">
+        <a class="btn btn-warning" href="{{ path('rule_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li style="float:left">
+        <form action="{{ path('rule_delete', { 'id': entity.id }) }}" method="post" >
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}
