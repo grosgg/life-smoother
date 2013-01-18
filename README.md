@@ -14,21 +14,11 @@ Feature objectives for v1.0
 * Expenses by shop (pie)
 * Expenses by user (pie)
 
-### Estimations:
-* Automatic estimation
-    * Average on past months (based on 1, 3, 6, 9 or 12 months)
-    * Simulation on upcoming months (forecasting for 6, 12, 18 and 24 months)
-    * Details by category, shop, user + savings
-    * Third column: calculated savings
-
-* Manual estimation
-    * Add recurring lines of expenses and incomes
-         * Set recurring period (day, week, month, year) x times (for example: every 2 weeks)
-    * Add exceptionnal expense lines
-    * Save and load as preset
-    * Simulation on upcoming months (forecasting for 6, 12, 18 and 24 months)
-    * Details by category, shop, user + savings
-
+### Automatic estimation:
+* Average on past months (based on 1, 3, 6, 9 or 12 months)
+* Simulation on upcoming months (forecasting for 6, 12, 18 and 24 months)
+* Details by category, shop, user + savings
+* Third column: calculated savings
 
 ### Groups:
 * Show operations by groups
@@ -47,14 +37,32 @@ Feature objectives for v1.0
 * Shop
 * Category for Shop
 * Category
-* User
+* Shopper
 
 ### Parsing Rules:
 * Create pattern
-* Choose what to match (shop, category, user…)
+* Choose what to match (shop, category, shopper…)
 
 ### Sonata Admin:
 * All entities
 * All users
 * Convenient methods:
     * Reset ProcessedLines for Import
+
+Feature objectives for v1.1
+----------------------
+
+### Mobile version
+
+### Multi currency
+
+### Expenses evolution
+
+### Manual estimation:
+* Add recurring lines of expenses and incomes
+    * Set recurring period (day, week, month, year) x times (for example: every 2 weeks)
+* Add exceptionnal expense lines
+* Save and load as preset
+* Simulation on upcoming months (forecasting for 6, 12, 18 and 24 months)
+* Details by category, shop, user + savings
+
