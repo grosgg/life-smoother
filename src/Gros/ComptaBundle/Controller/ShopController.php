@@ -27,19 +27,9 @@ class ShopController extends Controller
      */
     public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-        $userGroup = $this->getUser()->getGroup();
-        $limit = $this->container->getParameter('pagination_limit');
-
-        $countTotal = count($em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup)));
-        $pagesTotal = ceil($countTotal / $limit);
-        $paginator = array(
-            'pageCurrent' => $page,
-            'pagesTotal' => $pagesTotal,
-            'routeName' => 'shop_page',
-        );
-
-        $entities = $em->getRepository('GrosComptaBundle:Shop')->findBy(array('group' => $userGroup), array(), $limit, $limit * ($page -1));
+        $paginatorService = $this->container->get('gros_compta.paginator');
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Shop', $page);
+        $paginator = $paginatorService->createPaginator('GrosComptaBundle:Shop', $page, 'shop_page');
 
         return array(
             'entities' => $entities,

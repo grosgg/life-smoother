@@ -10,6 +10,10 @@ services:
         class: Gros\ComptaBundle\Service\GrosParser
         arguments: [@doctrine, @security.context]
 
+    gros_compta.paginator:
+        class: Gros\ComptaBundle\Service\GrosPaginator
+        arguments: [@doctrine, @security.context, %pagination_limit%]
+
     gros_compta.security:
         class: Gros\ComptaBundle\Service\GrosSecurity
         arguments: [@doctrine, @security.acl.provider, @security.context]
