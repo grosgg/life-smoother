@@ -20,18 +20,19 @@ class CategoryController extends Controller
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="category")
+     * @Route("/", name="category", defaults={"page" = 1})
+     * @Route("/page/{page}", name="category_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $userGroups = $this->getUser()->getGroups();
-        $entities = $em->getRepository('GrosComptaBundle:Category')->findByGroup($userGroups[0]);
+        $paginatorService = $this->container->get('gros_compta.paginator');
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Category', $page);
+        $paginator = $paginatorService->createPaginator('GrosComptaBundle:Category', $page, 'category_page');
 
         return array(
             'entities' => $entities,
+            'paginator' => $paginator,
         );
     }
 

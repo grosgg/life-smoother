@@ -21,18 +21,19 @@ class ShopperController extends Controller
     /**
      * Lists all Shopper entities.
      *
-     * @Route("/", name="shopper")
+     * @Route("/", name="shopper", defaults={"page" = 1})
+     * @Route("/page/{page}", name="shopper_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $userGroups = $this->getUser()->getGroups();
-        $entities = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($userGroups[0]);
+        $paginatorService = $this->container->get('gros_compta.paginator');
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Shopper', $page);
+        $paginator = $paginatorService->createPaginator('GrosComptaBundle:Shopper', $page, 'shopper_page');
 
         return array(
             'entities' => $entities,
+            'paginator' => $paginator,
         );
     }
 

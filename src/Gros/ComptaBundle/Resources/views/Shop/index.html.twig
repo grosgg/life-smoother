@@ -32,10 +32,15 @@
     </tbody>
 </table>
 
-{% include 'GrosComptaBundle::pagination.html.twig' with paginator %}
-
-<a class="btn btn-primary" href="{{ path('shop_create') }}">
-    Create a new entry
-</a>
+<div class="row">
+    <div class="span6">
+        {% include 'GrosComptaBundle::pagination.html.twig' with paginator %}
+    </div>
+    <div class="span3">
+        <a class="btn btn-primary btn-new-entry pull-right" href="{{ path('shop_create') }}">
+            Create a new entry
+        </a>
+    </div>
+</div>
 
 {% endblock %}

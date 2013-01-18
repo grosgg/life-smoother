@@ -21,20 +21,20 @@ class RuleController extends Controller
     /**
      * Lists all Rule entities.
      *
-     * @Route("/", name="rule")
+     * @Route("/", name="rule", defaults={"page" = 1})
+     * @Route("/page/{page}", name="rule_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $userGroup = $this->getUser()->getGroup();
-        $entities = $em->getRepository('GrosComptaBundle:Rule')->findByGroup($userGroup);
-        $grosSecurityService = $this->container->get('gros_compta.security');
+        $securityService = $this->container->get('gros_compta.security');
+        $paginatorService = $this->container->get('gros_compta.paginator');
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Rule', $page);
+        $paginator = $paginatorService->createPaginator('GrosComptaBundle:Rule', $page, 'rule_page');
 
         // Checking if the entity can be edited by current user
         foreach ($entities as $key => $entity) {
-            if ($grosSecurityService->checkUserAccess('EDIT', $entity, false)) {
+            if ($securityService->checkUserAccess('EDIT', $entity, false)) {
                 $entities[$key]->canEdit = true;
             } else {
                 $entities[$key]->canEdit = false;
@@ -43,6 +43,7 @@ class RuleController extends Controller
 
         return $this->render('GrosComptaBundle:Rule:index.html.twig', array(
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 

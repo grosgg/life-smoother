@@ -16,6 +16,7 @@
             <th>Amount</th>
             <th>Date</th>
             <th>Shop</th>
+            <th>Shopper</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -26,6 +27,7 @@
             <td>{% if entity.type == 0 %}-{% else %}+{% endif %}{{ entity.amount }}€</td>
             <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
             <td>{{ entity.shop.name }}</td>
+            <td>{{ entity.shopper.name }}</td>
             <td>{{ entity.description }}</td>
             <td>
                 <a class="btn" href="{{ path('operation_show', { 'id': entity.id }) }}">show</a>
@@ -43,7 +45,7 @@
         {% include 'GrosComptaBundle::pagination.html.twig' with paginator %}
     </div>
     <div class="span3">
-        <a class="btn btn-primary" href="{{ path('operation_create') }}">
+        <a class="btn btn-primary btn-new-entry pull-right" href="{{ path('operation_create') }}">
             Create a new entry
         </a>
     </div>
