@@ -1,0 +1,32 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block title %}
+    New Rule - {{ parent() }}
+{% endblock %}
+
+{% block sub_title %}
+    New Rule
+{% endblock %}
+
+{% form_theme form with 'GrosComptaBundle:Settings:fields.html.twig' %}
+
+{% block groscompta_body %}
+<form class="form-horizontal" action="{{ path('rule_create') }}" method="post" {{ form_enctype(form) }}>
+    <h4>Condition</h4>
+    {{ form_row(form.regex) }}
+    {{ form_row(form.priority) }}
+
+    <h4>Action</h4>
+    {{ form_row(form.shop) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.shopper) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form._token) }}
+
+    <p>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn" href="{{ path('rule') }}">Back to the list</a>
+    </p>
+</form>
+
+{% endblock %}
