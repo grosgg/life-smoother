@@ -3,21 +3,21 @@
         {% if pageCurrent-1 < 1 %}
             <li class="disabled"><a href="#">Prev</a></li>
         {% else %}
-            <li><a href="{{ path('shop_page', {'page': pageCurrent-1}) }}">Prev</a></li>
+            <li><a href="{{ path(routeName, {'page': pageCurrent-1}) }}">Prev</a></li>
         {% endif %}
         {% for i in (pageCurrent-2)..(pageCurrent+2) %}
             {% if i > 0 and i <= pagesTotal %}
                 {% if i == pageCurrent %}
-                    <li class="disabled"><a href="{{ path('shop_page', {'page': i}) }}">{{ i }}</a></li>
+                    <li class="disabled"><a href="{{ path(routeName, {'page': i}) }}">{{ i }}</a></li>
                 {% else %}
-                    <li><a href="{{ path('shop_page', {'page': i}) }}">{{ i }}</a></li>
+                    <li><a href="{{ path(routeName, {'page': i}) }}">{{ i }}</a></li>
                 {% endif %}
             {% endif %}
         {% endfor %}
         {% if pageCurrent+1 > pagesTotal %}
             <li class="disabled"><a href="#">Next</a></li>
         {% else %}
-            <li><a href="{{ path('shop_page', {'page': pageCurrent+1}) }}">Next</a></li>
+            <li><a href="{{ path(routeName, {'page': pageCurrent+1}) }}">Next</a></li>
         {% endif %}
     </ul>
 </div>

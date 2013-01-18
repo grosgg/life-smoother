@@ -21,20 +21,20 @@ class OperationController extends Controller
     /**
      * Lists all Operation entities.
      *
-     * @Route("/", name="operation")
+     * @Route("/", name="operation", defaults={"page" = 1})
+     * @Route("/page/{page}", name="operation_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $userGroups = $this->getUser()->getGroups();
-        $entities = $em->getRepository('GrosComptaBundle:Operation')->findByGroup($userGroups[0]);
-        $grosSecurityService = $this->container->get('gros_compta.security');
+        $securityService = $this->container->get('gros_compta.security');
+        $paginatorService = $this->container->get('gros_compta.paginator');
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Operation', $page);
+        $paginator = $paginatorService->createPaginator('GrosComptaBundle:Operation', $page, 'operation_page');
 
         // Checking if the entity can be edited by current user
         foreach ($entities as $key => $entity) {
-            if ($grosSecurityService->checkUserAccess('EDIT', $entity, false)) {
+            if ($securityService->checkUserAccess('EDIT', $entity, false)) {
                 $entities[$key]->canEdit = true;
             } else {
                 $entities[$key]->canEdit = false;
@@ -43,6 +43,7 @@ class OperationController extends Controller
 
         return $this->render('GrosComptaBundle:Operation:index.html.twig', array(
             'entities' => $entities,
+            'paginator' => $paginator,
         ));
     }
 
