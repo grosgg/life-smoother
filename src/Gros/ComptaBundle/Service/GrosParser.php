@@ -29,7 +29,43 @@ class GrosParser
         //$this->jeremy = $this->doctrine->getManager()->getRepository('GrosUserBundle:User')->findOneByUsername('jeremy');
     }
 
-    public function parseLabelLaBanquePostale($data)
+    public function parseLaBanquePostale($id, $absolutePath)
+    {
+        $result = array();
+        $row = 0;
+
+        if (($handle = fopen($absolutePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                $parsedDate = date_parse_from_format('d/m/Y', $data[0]);
+
+                if(checkdate($parsedDate['month'], $parsedDate['day'], $parsedDate['year'])) {
+                    // Checking if this line was already processed
+                    if (!$this->checkProcessedLine($id, $row)) {
+                        $result[$row]['date'] = $parsedDate['year'] . '-' . $parsedDate['month'] . '-' . $parsedDate['day'];
+                        $result[$row]['label'] = $data[1];
+
+                        if ($data[2] < 0) {
+                            $result[$row]['type'] = 0;
+                        } else {
+                            $result[$row]['type'] = 1;
+                        }
+                        $result[$row]['signedAmount'] = floatval(str_replace(',', '.', $data[2]));
+                        $result[$row]['absoluteAmount'] = abs($result[$row]['signedAmount']);
+
+                        $result[$row]['parsedLabel'] = $this->parseLabel($data[1]);
+                    }
+                    $row++;
+                }
+
+            }
+            fclose($handle);
+        }
+
+        //var_dump($result[0]);
+        return $result;
+    }
+
+    public function parseLabel($data)
     {
         $result = array(
             'guessedCategory' => null,
@@ -38,6 +74,16 @@ class GrosParser
         );
 
         // Auto guessing shops
+        $result = $this->autoGuessShop($data, $result);
+
+        // Applying default settings
+        $result = $this->applyDefaultSettings($result);
+
+        return $result;
+    }
+
+    private function autoGuessShop($data, $result)
+    {
         foreach ($this->shops as $shop) {
             if (strpos(strtolower($data), strtolower($shop->getName()))) {
                 $result['guessedShop'] = $shop->getId();
@@ -45,16 +91,11 @@ class GrosParser
             }
         }
 
-        // Custom guessing user
-        // TODO: Make automatic it later
-        //if (strpos($data, '879') !== false) {
-            //$user = $this->tomoko;
-        //} else {
-            //$user = $this->jeremy;
-        //}
-        //$result['guessedUser'] = $user->getId();
+        return $result;
+    }
 
-        // Applying default settings
+    private function applyDefaultSettings($result)
+    {
         if ($this->defaults) {
             if (!$result['guessedShop']) {
                 $result['guessedShop'] = $this->defaults->getShop()->getId();

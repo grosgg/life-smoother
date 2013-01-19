@@ -68,16 +68,16 @@ class ImportController extends Controller
         }
 
         //ACL or DB Security check
-        $grosSecurityService = $this->container->get('gros_compta.security');
-        $grosSecurityService->checkGroupAccess($import);
+        $securityService = $this->container->get('gros_compta.security');
+        $securityService->checkGroupAccess($import);
 
         $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
         $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($group);
         $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($group);
         $defaults = $em->getRepository('GrosComptaBundle:Defaults')->findByGroup($group);
 
-        $grosParserService = $this->container->get('gros_compta.parser');
-        $parsing = $import->parseLaBanquePostale($grosParserService);
+        $parserService = $this->container->get('gros_compta.parser');
+        $parsing = $parserService->parseLaBanquePostale($import->getId(), $import->getAbsolutePath());
 
         $operation = new Operation;
         $operationForm = new OperationType($this->getUser());

@@ -29,20 +29,21 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $entity = $em->getRepository('GrosComptaBundle:Defaults')->findOneByGroup($user->getGroup());
+        $entityType = new DefaultsType($user);
 
         if (!$entity) {
             //throw $this->createNotFoundException('Unable to find Defaults entity.');
             $entity = new Defaults();
         }
 
-        $form = $this->createForm(new DefaultsType, $entity);
+        $form = $this->createForm($entityType, $entity);
 
         $formHandler = new DefaultsHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $user);
 
         if ($formHandler->process()) {
         }
 
-        $editForm = $this->createForm(new DefaultsType(), $entity);
+        $editForm = $this->createForm($entityType, $entity);
 
         return array(
             'edit_form'   => $editForm->createView(),

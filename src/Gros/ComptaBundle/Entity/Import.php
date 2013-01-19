@@ -212,40 +212,4 @@ class Import
     }
 
 
-    public function parseLaBanquePostale($grosParserService)
-    {
-        $result = array();
-        $row = 0;
-
-        if (($handle = fopen($this->getAbsolutePath(), "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                $parsedDate = date_parse_from_format('d/m/Y', $data[0]);
-
-                if(checkdate($parsedDate['month'], $parsedDate['day'], $parsedDate['year'])) {
-                    // Checking if this line was already processed
-                    if (!$grosParserService->checkProcessedLine($this->getId(), $row)) {
-                        $result[$row]['date'] = $parsedDate['year'] . '-' . $parsedDate['month'] . '-' . $parsedDate['day'];
-                        $result[$row]['label'] = $data[1];
-
-                        if ($data[2] < 0) {
-                            $result[$row]['type'] = 0;
-                        } else {
-                            $result[$row]['type'] = 1;
-                        }
-                        $result[$row]['signedAmount'] = floatval(str_replace(',', '.', $data[2]));
-                        $result[$row]['absoluteAmount'] = abs($result[$row]['signedAmount']);
-
-                        $result[$row]['parsedLabel'] = $grosParserService->parseLabelLaBanquePostale($data[1]);
-                    }
-                    $row++;
-                }
-
-            }
-            fclose($handle);
-        }
-
-        //var_dump($result[0]);
-        return $result;
-    }
-
 }
