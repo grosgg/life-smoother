@@ -30,24 +30,30 @@ class RuleType extends AbstractType
             ->add('regex')
             ->add('priority', 'choice', array('choices' => $priorities))
             ->add('description')
-            ->add('category', 'entity',array(
-                'class'    => 'GrosComptaBundle:Category',
+            ->add('category', 'entity', array(
+                'empty_value'   => 'None',
+                'required'      => false,
+                'class'         => 'GrosComptaBundle:Category',
                 'query_builder' => function(EntityRepository $er) use ($groupId) {
                     return $er->createQueryBuilder('c')
                         ->where('c.group = :groupId')
                         ->setParameter('groupId', $groupId);
                 }
             ))
-            ->add('shop', 'entity',array(
-                'class'    => 'GrosComptaBundle:Shop',
+            ->add('shop', 'entity', array(
+                'empty_value'   => 'None',
+                'required'      => false,
+                'class'         => 'GrosComptaBundle:Shop',
                 'query_builder' => function(EntityRepository $er) use ($groupId) {
                     return $er->createQueryBuilder('s')
                         ->where('s.group = :groupId')
                         ->setParameter('groupId', $groupId);
                 }
             ))
-            ->add('shopper', 'entity',array(
-                'class'    => 'GrosComptaBundle:Shopper',
+            ->add('shopper', 'entity', array(
+                'empty_value'   => 'None',
+                'required'      => false,
+                'class'         => 'GrosComptaBundle:Shopper',
                 'query_builder' => function(EntityRepository $er) use ($groupId) {
                     return $er->createQueryBuilder('s')
                         ->where('s.group = :groupId')

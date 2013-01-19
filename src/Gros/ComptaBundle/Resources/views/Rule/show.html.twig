@@ -2,11 +2,11 @@
 {% extends "GrosComptaBundle::layout.html.twig" %}
 
 {% block title %}
-    Rule {{ entity.id }} - {{ parent() }}
+    Parsing Rule {{ entity.id }} - {{ parent() }}
 {% endblock %}
 
 {% block sub_title %}
-    Rule {{ entity.id }}
+    Parsing Rule {{ entity.id }}
 {% endblock %}
 
 {% block groscompta_body %}
@@ -27,15 +27,15 @@
         </tr>
         <tr>
             <th>Shop</th>
-            <td>{{ entity.shop.name }}</td>
+            <td>{% if entity.shop.name is defined %}{{ entity.shop.name }}{% else %}None{% endif %}</td>
         </tr>
         <tr>
             <th>Category</th>
-            <td>{{ entity.category.name }}</td>
+            <td>{% if entity.category.name is defined %}{{ entity.category.name }}{% else %}None{% endif %}</td>
         </tr>
         <tr>
             <th>Shopper</th>
-            <td>{{ entity.shopper }}</td>
+            <td>{% if entity.shopper.name is defined %}{{ entity.shopper.name }}{% else %}None{% endif %}</td>
         </tr>
         <tr>
             <th>Description</th>

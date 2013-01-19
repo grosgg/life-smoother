@@ -80,7 +80,7 @@ class ImportController extends Controller
         $parsing = $import->parseLaBanquePostale($grosParserService);
 
         $operation = new Operation;
-        $operationForm = new OperationType();
+        $operationForm = new OperationType($this->getUser());
         $operationFormDefaultName = $operationForm->getName();
         $forms = array();
 

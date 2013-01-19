@@ -48,22 +48,19 @@ class Rule
 
      /**
      * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     * @Assert\NotBlank()
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     private $category;
 
      /**
      * @ORM\ManyToOne(targetEntity="Shopper")
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotBlank()
      */
     private $shopper;
 
      /**
      * @ORM\ManyToOne(targetEntity="Shop")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\JoinColumn(nullable=true)
      */
     private $shop;
 
