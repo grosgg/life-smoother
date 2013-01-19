@@ -38,7 +38,7 @@
             Edit
         </a>
     </li>
-    <li style="float:left">
+    <li style="float:right">
         <form action="{{ path('category_delete', { 'id': entity.id }) }}" method="post" >
             {{ form_widget(delete_form) }}
             <button class="btn btn-danger" type="submit">Delete</button>

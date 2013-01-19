@@ -12,7 +12,7 @@
 
 {% block groscompta_body %}
 
-<form id='edit_form' action="{{ path('shop_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form class="form-horizontal" id='edit_form' action="{{ path('shop_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
 </form>
 

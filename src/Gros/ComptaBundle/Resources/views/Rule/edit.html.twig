@@ -25,14 +25,25 @@
     {{ form_row(edit_form.description) }}
     {{ form_row(edit_form._token) }}
 
-    <p>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn" href="{{ path('rule') }}">Back to the list</a>
-    </p>
 </form>
-<form action="{{ path('rule_delete', { 'id': entity.id }) }}" method="post">
-    {{ form_widget(delete_form) }}
-    <button class="btn btn-danger" type="submit">Delete</button>
-</form>
+
+<ul class="unstyled">
+    <li style="float:left; margin-right:10px">
+        <a class="btn btn-primary" onclick="$('#edit_form').submit()">
+            Save
+        </a>
+    </li>
+    <li style="float:left; margin-right:10px">
+        <a class="btn" href="{{ path('rule') }}">
+            Back to the list
+        </a>
+    </li>
+    <li style="float:right">
+        <form action="{{ path('rule_delete', { 'id': entity.id }) }}" method="post" >
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
 
 {% endblock %}

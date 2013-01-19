@@ -29,7 +29,7 @@ class RuleController extends Controller
     {
         $securityService = $this->container->get('gros_compta.security');
         $paginatorService = $this->container->get('gros_compta.paginator');
-        $entities = $paginatorService->getPageRows('GrosComptaBundle:Rule', $page);
+        $entities = $paginatorService->getPageRows('GrosComptaBundle:Rule', $page, 'priority');
         $paginator = $paginatorService->createPaginator('GrosComptaBundle:Rule', $page, 'rule_page');
 
         // Checking if the entity can be edited by current user

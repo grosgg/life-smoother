@@ -46,16 +46,16 @@
 
 <ul class="unstyled">
     <li style="float:left; margin-right:10px">
-        <a class="btn" href="{{ path('operation') }}">
-            Back to the list
-        </a>
-    </li>
-    <li style="float:left; margin-right:10px">
         <a class="btn btn-warning" href="{{ path('operation_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
-    <li style="float:left">
+    <li style="float:left; margin-right:10px">
+        <a class="btn" href="{{ path('operation') }}">
+            Back to the list
+        </a>
+    </li>
+    <li style="float:right">
         <form action="{{ path('operation_delete', { 'id': entity.id }) }}" method="post" >
             {{ form_widget(delete_form) }}
             <button class="btn btn-danger" type="submit">Delete</button>

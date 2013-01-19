@@ -31,8 +31,8 @@ class GrosPaginator
         return $paginator;
     }
 
-    public function getPageRows($entityName, $pageCurrent) {
-        return $this->doctrine->getManager()->getRepository($entityName)->findBy(array('group' => $this->group), array(), $this->limit, $this->limit * ($pageCurrent -1));
+    public function getPageRows($entityName, $pageCurrent, $order = 'id') {
+        return $this->doctrine->getManager()->getRepository($entityName)->findBy(array('group' => $this->group), array($order => 'DESC'), $this->limit, $this->limit * ($pageCurrent -1));
     }
 
 }
