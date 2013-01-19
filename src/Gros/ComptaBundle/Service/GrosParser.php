@@ -11,22 +11,26 @@ class GrosParser
     protected $doctrine;
     protected $shops;
     protected $categories;
+    protected $shoppers;
+    protected $rules;
     protected $defaults;
     protected $processedLineRepository;
+    protected $logger;
 
-    public function __construct(Registry $doctrine, $securityContext)
+    public function __construct(Registry $doctrine, $securityContext, $logger)
     {
         $this->doctrine = $doctrine;
+        $this->logger = $logger;
 
         $group = $securityContext->getToken()->getUser()->getGroup()->getId();
         $this->shops = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shop')->findByGroup($group);
         $this->categories = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Category')->findByGroup($group);
-        $this->defaults = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Defaults')->findOneByGroup($group);
-        $this->processedLineRepository = $this->doctrine->getManager()->getRepository('GrosComptaBundle:ProcessedLine');
+        $this->shoppers = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Shopper')->findByGroup($group);
 
-        // TODO: Here only to make less queries for now
-        //$this->tomoko = $this->doctrine->getManager()->getRepository('GrosUserBundle:User')->findOneByUsername('tomoko');
-        //$this->jeremy = $this->doctrine->getManager()->getRepository('GrosUserBundle:User')->findOneByUsername('jeremy');
+        $this->rules = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Rule')->findBy(array('group' => $group), array('priority' => 'DESC'));
+        $this->defaults = $this->doctrine->getManager()->getRepository('GrosComptaBundle:Defaults')->findOneByGroup($group);
+
+        $this->processedLineRepository = $this->doctrine->getManager()->getRepository('GrosComptaBundle:ProcessedLine');
     }
 
     public function parseLaBanquePostale($id, $absolutePath)
@@ -73,6 +77,9 @@ class GrosParser
             'guessedShopper'  => null,
         );
 
+        // Applying parsing rules first
+        $result = $this->applyParsingRules($data, $result);
+
         // Auto guessing shops
         $result = $this->autoGuessShop($data, $result);
 
@@ -82,12 +89,35 @@ class GrosParser
         return $result;
     }
 
+    private function applyParsingRules($data, $result)
+    {
+        foreach ($this->rules as $rule) {
+            $regex = '/' . $rule->getRegex() . '/';
+            if (preg_match($regex, $data)) {
+                $this->logger->debug('String ' . $data . ' matches regex ' . $regex . ' with priority ' . $rule->getPriority());
+                if ($rule->getCategory()) {
+                    $result['guessedCategory'] = $rule->getCategory()->getId();
+                }
+                if ($rule->getShop()) {
+                    $result['guessedShop'] = $rule->getShop()->getId();
+                }
+                if ($rule->getShopper()) {
+                    $result['guessedShopper'] = $rule->getShopper()->getId();
+                }
+            }
+        }
+
+        return $result;
+    }
+
     private function autoGuessShop($data, $result)
     {
-        foreach ($this->shops as $shop) {
-            if (strpos(strtolower($data), strtolower($shop->getName()))) {
-                $result['guessedShop'] = $shop->getId();
-                $result['guessedCategory'] = $shop->getDefaultCategory()->getId();
+        if (!$result['guessedShop']) {
+            foreach ($this->shops as $shop) {
+                if (strpos(strtolower($data), strtolower($shop->getName()))) {
+                    $result['guessedShop'] = $shop->getId();
+                    $result['guessedCategory'] = $shop->getDefaultCategory()->getId();
+                }
             }
         }
 

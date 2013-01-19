@@ -8,7 +8,7 @@ services:
 
     gros_compta.parser:
         class: Gros\ComptaBundle\Service\GrosParser
-        arguments: [@doctrine, @security.context]
+        arguments: [@doctrine, @security.context, @gros.logger]
 
     gros_compta.paginator:
         class: Gros\ComptaBundle\Service\GrosPaginator
