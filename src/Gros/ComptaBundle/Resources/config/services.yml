@@ -34,7 +34,19 @@ services:
         class: Gros\ComptaBundle\Admin\ShopperAdmin
         arguments: [null, Gros\ComptaBundle\Entity\Shopper, 'SonataAdminBundle:CRUD']
         tags:
-            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Shopper }
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Shoppers }
+
+    gros.compta.admin.rules:
+        class: Gros\ComptaBundle\Admin\RuleAdmin
+        arguments: [null, Gros\ComptaBundle\Entity\Rule, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Parsing Rules }
+
+    gros.compta.admin.defaults:
+        class: Gros\ComptaBundle\Admin\DefaultsAdmin
+        arguments: [null, Gros\ComptaBundle\Entity\Defaults, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: ComptaGros, label: Defaults }
 
     gros.logger:
         class: Symfony\Bridge\Monolog\Logger

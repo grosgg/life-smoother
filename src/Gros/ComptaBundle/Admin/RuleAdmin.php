@@ -10,9 +10,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-use Gros\ComptaBundle\Entity\Shop;
+use Gros\ComptaBundle\Entity\Rule;
 
-class ShopAdmin extends Admin
+class RuleAdmin extends Admin
 {
     /**
      * Create and Edit
@@ -23,7 +23,8 @@ class ShopAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-                ->add('name')
+                ->add('regex')
+                ->add('priority')
                 ->add('description')
                 ->add('group')
             ->setHelps(array(
@@ -41,9 +42,12 @@ class ShopAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->addIdentifier('name')
+            ->addIdentifier('regex')
+            ->add('priority')
+            ->add('category')
+            ->add('shop')
+            ->add('shopper')
             ->add('description')
-            ->add('default_category')
             ->add('group')
             ->add('_action', 'actions', array(
                 'actions' => array(
