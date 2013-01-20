@@ -10,6 +10,12 @@
 
 {% block groscompta_body %}
 
+{% if entities is empty %}
+<div class="well">
+    No Operation has been recorded yet.<br/>
+    Make sure you have at least one Shopper, Category and Shop created before adding Operations.
+</div>
+{% else %}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -39,6 +45,7 @@
     {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
 <div class="row">
     <div class="span6">

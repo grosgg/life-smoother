@@ -84,32 +84,32 @@ class RuleController extends Controller
     public function createAction(Request $request)
     {
         $logger = $this->container->get('gros.logger');
-        $grosSecurityService = $this->container->get('gros_compta.security');
-        $rule = new Rule();
-        $rule->setGroup($this->getUser()->getGroup());
-        $ruleType = new RuleType($this->getUser());
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $userGroup = $user->getGroup();
 
-        $formId = $request->get('form_id');
-        if ($formId != null) {
-            $newFormName = $ruleType->getName() . '_' . $formId;
-            $ruleType->setName($newFormName);
+        // Checking if at least one category, shopper and shop exist for this group
+        if ($request->getMethod() == 'GET') {
+            $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($userGroup);
+            $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($userGroup);
+            $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($userGroup);
+            if (empty($categories) || empty($shoppers) || empty($shops)) {
+                $this->get('session')->setFlash('error', 'Please add at least one Category, Shopper and Shop first.');
+                return $this->redirect($this->generateUrl('rule'));
+            }
         }
 
+        $securityService = $this->container->get('gros_compta.security');
+        $rule = new Rule();
+        $rule->setGroup($userGroup);
+        $ruleType = new RuleType($user);
+
         $form = $this->createForm($ruleType, $rule);
+        $formHandler = new RuleHandler($form, $request, $em, $user, $logger);
 
-        $formHandler = new RuleHandler($form, $request, $this->getDoctrine()->getEntityManager(), $this->getUser(), $logger);
-
-        // Different process depending on form origin
-        if($request->isXmlHttpRequest()) {
-            if ($formHandler->processAjax()) {
-                $grosSecurityService->insertAce($rule);
-                die(json_encode(array('status' => true, 'rule' => $rule->getId(), 'form' => $formId)));
-            }
-        } else {
-            if ($formHandler->process()) {
-                $grosSecurityService->insertAce($rule);
-                return $this->redirect($this->generateUrl('rule_show', array('id' => $rule->getId())));
-            }
+        if ($formHandler->process()) {
+            $securityService->insertAce($rule);
+            return $this->redirect($this->generateUrl('rule_show', array('id' => $rule->getId())));
         }
 
         return $this->render('GrosComptaBundle:Rule:create.html.twig', array(

@@ -11,6 +11,12 @@
 
 {% block groscompta_body %}
 
+{% if entities is empty %}
+<div class="well">
+    No Shop has been saved yet.<br/>
+    Make sure you have at least one Category created before adding Parsing Rules.
+</div>
+{% else %}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -31,6 +37,7 @@
     {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
 <div class="row">
     <div class="span6">

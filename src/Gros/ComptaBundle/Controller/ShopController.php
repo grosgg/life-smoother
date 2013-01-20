@@ -73,10 +73,23 @@ class ShopController extends Controller
      */
     public function createAction(Request $request)
     {
-        $shop  = new Shop;
-        $form = $this->createForm(new ShopType($this->getUser()), $shop);
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $userGroup = $user->getGroup();
 
-        $formHandler = new ShopHandler($form, $this->get('request'), $this->getDoctrine()->getEntityManager(), $this->getUser());
+        // Checking if at least one category, shopper and shop exist for this group
+        if ($request->getMethod() == 'GET') {
+            $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($userGroup);
+            if (empty($categories)) {
+                $this->get('session')->setFlash('error', 'Please add at least one Category first.');
+                return $this->redirect($this->generateUrl('shop'));
+            }
+        }
+
+        $shop  = new Shop;
+        $form = $this->createForm(new ShopType($user), $shop);
+
+        $formHandler = new ShopHandler($form, $this->get('request'), $em, $user);
 
         if ($formHandler->process()) {
             return $this->redirect($this->generateUrl('shop_show', array('id' => $shop->getId())));

@@ -84,9 +84,24 @@ class OperationController extends Controller
     public function createAction(Request $request)
     {
         $logger = $this->container->get('gros.logger');
-        $grosSecurityService = $this->container->get('gros_compta.security');
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $userGroup = $user->getGroup();
+
+        // Checking if at least one category, shopper and shop exist for this group
+        if ($request->getMethod() == 'GET') {
+            $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($userGroup);
+            $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($userGroup);
+            $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($userGroup);
+            if (empty($categories) || empty($shoppers) || empty($shops)) {
+                $this->get('session')->setFlash('error', 'Please add at least one Category, Shopper and Shop first.');
+                return $this->redirect($this->generateUrl('operation'));
+            }
+        }
+
+        $securityService = $this->container->get('gros_compta.security');
         $operation  = new Operation();
-        $operationType = new OperationType($this->getUser());
+        $operationType = new OperationType($user);
 
         $formId = $request->get('form_id');
         if ($formId != null) {
@@ -96,17 +111,17 @@ class OperationController extends Controller
 
         $form = $this->createForm($operationType, $operation);
 
-        $formHandler = new OperationHandler($form, $request, $this->getDoctrine()->getEntityManager(), $this->getUser(), $logger);
+        $formHandler = new OperationHandler($form, $request, $em, $user, $logger);
 
         // Different process depending on form origin
         if($request->isXmlHttpRequest()) {
             if ($formHandler->processAjax()) {
-                $grosSecurityService->insertAce($operation);
+                $securityService->insertAce($operation);
                 die(json_encode(array('status' => true, 'operation' => $operation->getId(), 'form' => $formId)));
             }
         } else {
             if ($formHandler->process()) {
-                $grosSecurityService->insertAce($operation);
+                $securityService->insertAce($operation);
                 return $this->redirect($this->generateUrl('operation_show', array('id' => $operation->getId())));
             }
         }

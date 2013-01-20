@@ -10,6 +10,11 @@
 
 {% block groscompta_body %}
 
+{% if entities is empty %}
+<div class="well">
+    No Category has been created yet.
+</div>
+{% else %}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -30,6 +35,7 @@
     {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
 <div class="row">
     <div class="span6">
