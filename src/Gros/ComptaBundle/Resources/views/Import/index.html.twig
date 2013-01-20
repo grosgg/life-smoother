@@ -24,19 +24,25 @@
 <div class="row">
     <div class="span9">
         <div class="well">
+            {% if can_import == true %}
             <form class="form-horizontal" method="post" {{ form_enctype(form) }}>
                 {{ form_widget(form) }}
                 <input type="submit" class="btn btn-primary" value="Upload CSV"/>
             </form>
+            {% else %}
+            Make sure you have at least one Shopper, Category and Shop created before trying to import data.
+            {% endif %}
         </div>
     </div>
 </div>
 <div class="row">
     <div class="span9">
+        {% if pending_imports is not empty %}
         <h3>Imports pending for validation</h3>
         {% for import in pending_imports %}
         <p><a href="{{ path('import_parsing', {'id' : import.id }) }}"><i class="icon-list"></i> {{ import.date|date("d/m/Y H:i:s") }}</a></p>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

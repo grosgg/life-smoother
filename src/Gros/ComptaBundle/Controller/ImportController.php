@@ -27,6 +27,21 @@ class ImportController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $userGroup = $user->getGroup();
+        $canImport = true;
+
+        // Checking if at least one category, shopper and shop exist for this group
+        if ($request->getMethod() == 'GET') {
+            $categories = $em->getRepository('GrosComptaBundle:Category')->findByGroup($userGroup);
+            $shoppers = $em->getRepository('GrosComptaBundle:Shopper')->findByGroup($userGroup);
+            $shops = $em->getRepository('GrosComptaBundle:Shop')->findByGroup($userGroup);
+            if (empty($categories) || empty($shoppers) || empty($shops)) {
+                $canImport = false;
+            }
+        }
+
         // Uploader
         $import = new Import;
         $form = $this->createFormBuilder($import)
@@ -40,13 +55,12 @@ class ImportController extends Controller
         }
 
         // Pending imports list
-        $em = $this->getDoctrine()->getManager();
-        $userGroups = $this->getUser()->getGroups();
-        $entities = $em->getRepository('GrosComptaBundle:Import')->findByGroup($userGroups[0]);
+        $entities = $em->getRepository('GrosComptaBundle:Import')->findByGroup($userGroup);
 
         return $this->render('GrosComptaBundle:Import:index.html.twig', array(
             'form' => $form->createView(),
             'pending_imports' => $entities,
+            'can_import' => $canImport,
         ));
     }
 
