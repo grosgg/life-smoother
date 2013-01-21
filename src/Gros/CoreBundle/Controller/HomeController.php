@@ -9,11 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * Default controller.
+ * Home controller.
  *
  * @Route("/home")
  */
-class DefaultController extends Controller
+class HomeController extends Controller
 {
     /**
      * Home screen for website
@@ -23,6 +23,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('GrosCoreBundle:Default:index.html.twig');
+        return $this->render('GrosCoreBundle:Home:index.html.twig');
     }
 }

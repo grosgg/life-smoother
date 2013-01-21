@@ -1,0 +1,9 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block sidebar %}
+<h3>Charts</h3>
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="{{ path('analytics') }}">Analytics</a></li>
+    <li><a href="{{ path('estimations_automatic') }}">Estimations</a></li>
+</ul>
+{% endblock %}

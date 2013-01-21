@@ -7,6 +7,11 @@ gros_compta:
     type:     annotation
     prefix:   /
 
+home:
+    resource: "@GrosCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 # Internal routing configuration to handle ESI
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"

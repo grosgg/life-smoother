@@ -1,0 +1,9 @@
+{% extends "GrosComptaBundle::layout.html.twig" %}
+
+{% block sidebar %}
+<h3>Settings</h3>
+<ul class="nav nav-pills nav-stacked">
+    <li><a href="{{ path('settings_defaults')}}">Defaults</a></li>
+    <li><a href="{{ path('rule')}}">Parsing Rules</a></li>
+</ul>
+{% endblock %}
