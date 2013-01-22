@@ -5,9 +5,108 @@
 {% endblock %}
 
 {% block header %}
-{% include "::navbar.html.twig" %}
+    {% include "::navbar.html.twig" %}
 {% endblock %}
 
 {% block body %}
-Home
+<div class="row">
+    <div class="span6">
+        <div class="well home-well">
+            <h3>Achievements</h3>
+            <ul class="unstyled achievement-list">
+                {% for achievement in achievements %}
+                <li class="{% if achievement.done == true %}achieved{% endif %}">
+                    <i class="icon-arrow-right"></i> {{ achievement.label }} {% if achievement.done == true %}<i class="icon-ok pull-right"></i>{% endif %}
+                </li>
+                {% endfor%}
+            </ul>
+            <p style="text-align:center">Your profile is <span class="progress-percent">{{ progress }}%</span> complete!</p>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="well home-well">
+            <h3>Latest Operations</h3>
+            {% if operations is empty %}
+                No Operation has been recorded yet.<br/>
+                Make sure you have at least one Shopper, Category and Shop created before adding Operations.
+            {% else %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Shop</th>
+                        <th>Shopper</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for operation in operations %}
+                    <tr>
+                        <td>{% if operation.type == 0 %}-{% else %}+{% endif %}{{ operation.amount }}€</td>
+                        <td>{% if operation.date %}{{ operation.date|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ operation.shop.name }}</td>
+                        <td>{{ operation.shopper.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span4">
+        <div class="well well-small home-well-small">
+            <h4>Savings</h4>
+            <ul class="unstyled">
+                <li><i class="icon-star"></i> Saved so far this month ({{ "now"|date("F") }}):
+                    <span class="pull-right">
+                    {{ (savings.month[1] - savings.month[0]) | number_format(2) }}
+                    </span>
+                </li>
+                <li><i class="icon-star-empty"></i> Spent so far this month ({{ "now"|date("F") }}):
+                    <span class="pull-right">
+                    {{ savings.month[0] | number_format(2) }}
+                    </span>
+                </li>
+                <li><i class="icon-star"></i> Saved so far this year ({{ "now"|date("Y") }}):
+                    <span class="pull-right">
+                    {{ (savings.year[1] - savings.year[0]) | number_format(2) }}
+                    </span>
+                </li>
+                <li><i class="icon-star-empty"></i> Spent so far this year ({{ "now"|date("Y") }}):
+                    <span class="pull-right">
+                    {{ savings.year[0] | number_format(2) }}
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="well well-small home-well-small">
+            <h4>Imports</h4>
+            {% if imports is empty %}
+            <p>You didn't import any bank data yet.</p>
+            {% else %}
+            <ul class="unstyled">
+                {% for import in imports %}
+                <li><i class="icon-list"></i> <a href="{{ path('import_parsing', {'id' : import.id }) }}">{{ import.date|date("d/m/Y H:i:s") }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="span4">
+        <div class="well well-small home-well-small">
+            <h4>Shortcuts</h4>
+            <ul class="unstyled">
+                <li><i class="icon-bookmark"></i> <a href="{{ path('rule_create') }}">Add Parsing Rule</a></li>
+                <li><i class="icon-bookmark"></i> <a href="{{ path('shop_create') }}">Add Shop</a></li>
+                <li><i class="icon-bookmark"></i> <a href="{{ path('category_create') }}">Add Category</a></li>
+                <li><i class="icon-bookmark"></i> <a href="{{ path('shopper_create') }}">Add Shopper</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

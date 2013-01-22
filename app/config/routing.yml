@@ -1,6 +1,6 @@
 _welcome:
     pattern:  /
-    defaults: { _controller: GrosComptaBundle:Analytics:index }
+    defaults: { _controller: GrosCoreBundle:Home:index }
 
 gros_compta:
     resource: "@GrosComptaBundle/Controller/"

@@ -1,1 +1,9 @@
 a.btn-new-entry { margin: 20px 0px }
+
+div.home-well { min-height: 300px }
+div.home-well-small { min-height: 130px }
+span.progress-percent { font-size: 36px; font-weight: bolder; }
+
+ul.achievement-list { margin-bottom: 30px; }
+ul.achievement-list > li { padding: 5px; }
+ul.achievement-list > li.achieved { background-color: #DFF0D8; }
