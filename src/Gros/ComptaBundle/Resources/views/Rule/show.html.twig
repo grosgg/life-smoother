@@ -2,21 +2,17 @@
 {% extends "GrosComptaBundle::layoutsettings.html.twig" %}
 
 {% block title %}
-    Parsing Rule {{ entity.id }} - {{ parent() }}
+    Parsing Rule - {{ parent() }}
 {% endblock %}
 
 {% block sub_title %}
-    Parsing Rule {{ entity.id }}
+    Parsing Rule
 {% endblock %}
 
 {% block groscompta_body %}
 
 <table class="table table-striped">
     <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
         <tr>
             <th>Expression</th>
             <td>{{ entity.regex }}</td>
